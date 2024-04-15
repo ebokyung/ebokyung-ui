@@ -1,5 +1,6 @@
 module.exports = {
   arrowParens: 'avoid', // 화살표 함수의 매개변수가 하나일 때 괄호 생략 여부 (생략할 경우 aviod)
+  bracketSpacing: true, // 객체 리터럴에서 괄호에 공백 삽입 여부
   endOfLine: 'lf', // 개행문자 설정
   printWidth: 120, // 코드 한 줄의 max lnegth 120
   semi: true, // 세미콜론 사용 여부
