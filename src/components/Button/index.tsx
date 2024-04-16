@@ -1,7 +1,21 @@
-import { ComponentProps } from 'react';
+import { forwardRef } from 'react';
+import { buttonStyles, colorVar } from './button.css';
+import { ButtonProps } from './button.types';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
+import { vars } from '@/styles/vars.css';
 
-type ButtonProps = ComponentProps<'button'>;
-
-export const Button = ({ ...props }: ButtonProps) => {
-  return <button {...props} />;
-};
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ variant, size, color, children, disabled = false, onClick, className, pending = false }, ref) => {
+    return (
+      <button
+        className={`${buttonStyles({ variant, size })} ${className}`}
+        style={assignInlineVars({ [colorVar]: vars.colors[color || 'primary'] })}
+        disabled={disabled || pending}
+        onClick={onClick}
+        ref={ref}
+      >
+        {children}
+      </button>
+    );
+  },
+);
