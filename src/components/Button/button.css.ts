@@ -31,9 +31,6 @@ const variantStyles = {
     color: colorVar,
     backgroundColor: 'inherit',
     transition: 'backgroundColor 300ms',
-    '&:hover': {
-      backgroundColor: colorVar, // 투명도 주거나 연한색 지정하기
-    },
   },
 };
 
@@ -80,6 +77,38 @@ export const buttonStyles = recipe({
       variants: { variant: 'outline', color: 'secondary' },
       style: {
         color: vars.colors.primary,
+      },
+    },
+
+    {
+      variants: { variant: 'ghost', color: 'primary' }, // 한 번에 여러가지를 처리하는 방법?
+      style: {
+        selectors: {
+          '&:hover': {
+            backgroundColor: vars.colors.primaryHover,
+          },
+        },
+      },
+    },
+    {
+      variants: { variant: 'ghost', color: 'secondary' }, // 한 번에 여러가지를 처리하는 방법?
+      style: {
+        color: vars.colors.primary,
+        selectors: {
+          '&:hover': {
+            backgroundColor: vars.colors.secondaryHover,
+          },
+        },
+      },
+    },
+    {
+      variants: { variant: 'ghost', color: 'negative' }, // 한 번에 여러가지를 처리하는 방법?
+      style: {
+        selectors: {
+          '&:hover': {
+            backgroundColor: vars.colors.negativeHover,
+          },
+        },
       },
     },
   ],
