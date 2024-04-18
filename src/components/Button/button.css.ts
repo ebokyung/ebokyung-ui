@@ -1,8 +1,6 @@
 import { vars } from '@/styles/vars.css';
-import { style, createVar } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-
-export const colorVar = createVar();
 
 const baseStyles = style({
   width: '100%',
@@ -19,16 +17,13 @@ const variantStyles = {
   solid: {
     border: 'none',
     color: 'white',
-    backgroundColor: colorVar,
   },
   outline: {
-    border: `1px solid ${colorVar}`,
-    color: colorVar,
+    border: `1px solid`,
     backgroundColor: 'inherit',
   },
   ghost: {
     border: 'none',
-    color: colorVar,
     backgroundColor: 'inherit',
     transition: 'backgroundColor 300ms',
   },
@@ -68,6 +63,12 @@ export const buttonStyles = recipe({
   },
   compoundVariants: [
     {
+      variants: { variant: 'solid', color: 'primary' },
+      style: {
+        backgroundColor: vars.colors.primary,
+      },
+    },
+    {
       variants: { variant: 'solid', color: 'secondary' },
       style: {
         color: vars.colors.primary,
@@ -75,15 +76,36 @@ export const buttonStyles = recipe({
       },
     },
     {
-      variants: { variant: 'outline', color: 'secondary' },
+      variants: { variant: 'solid', color: 'negative' },
       style: {
+        backgroundColor: vars.colors.negative,
+      },
+    },
+    {
+      variants: { variant: 'outline', color: 'primary' },
+      style: {
+        borderColor: vars.colors.primary,
         color: vars.colors.primary,
       },
     },
-
+    {
+      variants: { variant: 'outline', color: 'secondary' },
+      style: {
+        borderColor: vars.colors.secondary,
+        color: vars.colors.primary,
+      },
+    },
+    {
+      variants: { variant: 'outline', color: 'negative' },
+      style: {
+        borderColor: vars.colors.negative,
+        color: vars.colors.negative,
+      },
+    },
     {
       variants: { variant: 'ghost', color: 'primary' }, // 한 번에 여러가지를 처리하는 방법?
       style: {
+        color: vars.colors.primary,
         selectors: {
           '&:hover': {
             backgroundColor: vars.colors.primaryHover,
@@ -105,6 +127,7 @@ export const buttonStyles = recipe({
     {
       variants: { variant: 'ghost', color: 'negative' }, // 한 번에 여러가지를 처리하는 방법?
       style: {
+        color: vars.colors.negative,
         selectors: {
           '&:hover': {
             backgroundColor: vars.colors.negativeHover,
