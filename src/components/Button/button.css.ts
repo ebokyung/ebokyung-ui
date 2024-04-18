@@ -1,3 +1,4 @@
+import { vars } from '@/styles/vars.css';
 import { style, createVar } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
@@ -17,7 +18,7 @@ const baseStyles = style({
 const variantStyles = {
   solid: {
     border: 'none',
-    color: 'white', // secondary일때 다른색 주기
+    color: 'white',
     backgroundColor: colorVar,
   },
   outline: {
@@ -68,6 +69,20 @@ export const buttonStyles = recipe({
     size: sizeStyles,
     color: colorStyles,
   },
+  compoundVariants: [
+    {
+      variants: { variant: 'solid', color: 'secondary' },
+      style: {
+        color: vars.colors.primary,
+      },
+    },
+    {
+      variants: { variant: 'outline', color: 'secondary' },
+      style: {
+        color: vars.colors.primary,
+      },
+    },
+  ],
   defaultVariants: {
     variant: 'solid',
     size: 'medium',
