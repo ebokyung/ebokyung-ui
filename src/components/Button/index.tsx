@@ -8,7 +8,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant, size, color, children, disabled = false, onClick, className, pending = false }, ref) => {
     return (
       <button
-        className={`${buttonStyles({ variant, size })} ${className}`}
+        className={`${buttonStyles({ variant, size, color })} ${className}`}
         style={assignInlineVars({ [colorVar]: vars.colors[color || 'primary'] })}
         disabled={disabled || pending}
         onClick={onClick}

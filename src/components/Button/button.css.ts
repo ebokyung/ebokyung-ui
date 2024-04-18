@@ -55,14 +55,22 @@ const sizeStyles = {
   },
 };
 
+const colorStyles = {
+  primary: {},
+  secondary: {},
+  negative: {},
+};
+
 export const buttonStyles = recipe({
   base: baseStyles,
   variants: {
     variant: variantStyles,
     size: sizeStyles,
+    color: colorStyles,
   },
   defaultVariants: {
     variant: 'solid',
     size: 'medium',
+    color: 'primary',
   },
 });
