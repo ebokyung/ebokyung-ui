@@ -6,8 +6,8 @@ export const colorVar = createVar();
 
 const baseStyles = style({
   width: '100%',
-  // boxSizing: 'border-box',
-  fontWeight: 600,
+  boxSizing: 'border-box',
+  fontWeight: 400,
   outline: 'none',
   cursor: 'pointer',
   ':disabled': {
@@ -71,6 +71,7 @@ export const buttonStyles = recipe({
       variants: { variant: 'solid', color: 'secondary' },
       style: {
         color: vars.colors.primary,
+        backgroundColor: vars.colors.secondaryHover,
       },
     },
     {
@@ -93,7 +94,7 @@ export const buttonStyles = recipe({
     {
       variants: { variant: 'ghost', color: 'secondary' }, // 한 번에 여러가지를 처리하는 방법?
       style: {
-        color: vars.colors.primary,
+        color: vars.colors.secondary,
         selectors: {
           '&:hover': {
             backgroundColor: vars.colors.secondaryHover,
