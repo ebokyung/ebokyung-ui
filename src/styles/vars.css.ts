@@ -1,9 +1,14 @@
 import { createGlobalTheme } from '@vanilla-extract/css';
 
-export const vars = createGlobalTheme(':root', {
+const colorPalette = {
   colors: {
     primary: '#18181B',
-    secondary: '#F4F4F5',
+    primaryHover: '#F4F4F4',
+    secondary: '#ECECEC',
+    secondaryHover: '#F4F4F4',
     negative: '#DC2625',
+    negativeHover: '#f8d3d3',
   },
-});
+};
+
+export const vars = createGlobalTheme(':root', colorPalette);
