@@ -13,6 +13,13 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+export const DefaultOnClick: Story = {
+  args: {
+    children: 'On click!',
+    onClick: () => alert('Clicked!'),
+  },
+};
+
 export const SolidLargePrimary: Story = {
   args: {
     children: 'Button',
