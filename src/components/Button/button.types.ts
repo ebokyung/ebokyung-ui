@@ -1,4 +1,4 @@
-import type { MouseEventHandler } from 'react';
+import type { MouseEventHandler, ReactNode } from 'react';
 
 export type ButtonVariant = 'solid' | 'outline' | 'ghost';
 
@@ -10,6 +10,8 @@ export type ButtonProps = {
   variant: ButtonVariant;
   size: ButtonSize;
   color: ButtonColor;
+  prefix?: ReactNode;
+  postfix?: ReactNode;
   children: string;
   pending?: boolean;
   disabled?: boolean;

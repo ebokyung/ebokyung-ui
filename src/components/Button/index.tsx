@@ -3,7 +3,7 @@ import { buttonStyles } from './button.css';
 import { ButtonProps } from './button.types';
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant, size, color, children, disabled = false, onClick, className, pending = false }, ref) => {
+  ({ variant, size, color, prefix, postfix, children, disabled = false, onClick, className, pending = false }, ref) => {
     return (
       <button
         className={`${buttonStyles({ variant, size, color })} ${className}`}
@@ -11,7 +11,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         onClick={onClick}
         ref={ref}
       >
-        {pending ? 'loading...' : children}
+        {pending ? (
+          'loading...'
+        ) : (
+          <>
+            {prefix ? <span>{prefix}</span> : null}
+            {children}
+            {postfix ? <span>{postfix}</span> : null}
+          </>
+        )}
       </button>
     );
   },

@@ -84,3 +84,9 @@ export const Pending: Story = {
     pending: true,
   },
 };
+
+export const WithIcon: Story = {
+  args: {
+    prefix: '🍓',
+  },
+};

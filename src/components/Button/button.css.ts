@@ -4,6 +4,9 @@ import { recipe } from '@vanilla-extract/recipes';
 
 const baseStyles = style({
   width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.4em',
   boxSizing: 'border-box',
   fontWeight: 400,
   outline: 'none',
