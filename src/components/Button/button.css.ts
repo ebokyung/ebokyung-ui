@@ -142,3 +142,9 @@ export const buttonStyles = recipe({
     color: 'primary',
   },
 });
+
+export const wrapper = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+});

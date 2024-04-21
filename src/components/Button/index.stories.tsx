@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from '.';
+import { wrapper } from './button.css';
+import { ButtonColor } from './button.types';
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
@@ -8,6 +10,29 @@ const meta: Meta<typeof Button> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  argTypes: {
+    variant: {
+      options: ['solid', 'outline', 'ghost'],
+      control: { type: 'radio' },
+    },
+    size: {
+      options: ['large', 'medium', 'small', 'xSmall'],
+      control: { type: 'radio' },
+    },
+    color: {
+      options: ['primary', 'secondary', 'negative'],
+      control: { type: 'radio' },
+    },
+  },
+  render: props => (
+    <div className={wrapper}>
+      {['primary', 'secondary', 'negative'].map(item => (
+        <Button {...props} color={item as ButtonColor}>
+          Button
+        </Button>
+      ))}
+    </div>
+  ),
 };
 export default meta;
 
@@ -20,79 +45,22 @@ export const DefaultOnClick: Story = {
   },
 };
 
-export const SolidLargePrimary: Story = {
+export const SolidLarge: Story = {
   args: {
-    children: 'Button',
     variant: 'solid',
     size: 'large',
   },
 };
 
-export const SolidLargeSecondary: Story = {
+export const OutlineMedium: Story = {
   args: {
-    children: 'Button',
-    variant: 'solid',
-    size: 'large',
-    color: 'secondary',
-  },
-};
-
-export const SolidLargeNegative: Story = {
-  args: {
-    children: 'Button',
-    variant: 'solid',
-    size: 'large',
-    color: 'negative',
-  },
-};
-
-export const OutlineMediumPrimary: Story = {
-  args: {
-    children: 'Button',
     variant: 'outline',
-    color: 'primary',
   },
 };
 
-export const OutlineMediumSecondary: Story = {
+export const GhostSmall: Story = {
   args: {
-    children: 'Button',
-    variant: 'outline',
-    color: 'secondary',
-  },
-};
-
-export const OutlineMediumNegative: Story = {
-  args: {
-    children: 'Button',
-    variant: 'outline',
-    color: 'negative',
-  },
-};
-
-export const GhostSmallPrimary: Story = {
-  args: {
-    children: 'Button',
     variant: 'ghost',
     size: 'small',
-    color: 'primary',
-  },
-};
-
-export const GhostSmallSecondary: Story = {
-  args: {
-    children: 'Button',
-    variant: 'ghost',
-    size: 'small',
-    color: 'secondary',
-  },
-};
-
-export const GhostSmallNegative: Story = {
-  args: {
-    children: 'Button',
-    variant: 'ghost',
-    size: 'small',
-    color: 'negative',
   },
 };
