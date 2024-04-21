@@ -9,7 +9,8 @@ const baseStyles = style({
   outline: 'none',
   cursor: 'pointer',
   ':disabled': {
-    cursor: 'not-allowed',
+    pointerEvents: 'none',
+    opacity: 0.4,
   },
 });
 

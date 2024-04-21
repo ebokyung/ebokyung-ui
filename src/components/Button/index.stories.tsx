@@ -23,6 +23,14 @@ const meta: Meta<typeof Button> = {
       options: ['primary', 'secondary', 'negative'],
       control: { type: 'radio' },
     },
+    disabled: {
+      options: ['true', 'false'],
+      control: { type: 'boolean' },
+    },
+    pending: {
+      options: ['true', 'false'],
+      control: { type: 'boolean' },
+    },
   },
   render: props => (
     <div className={wrapper}>
@@ -62,5 +70,17 @@ export const GhostSmall: Story = {
   args: {
     variant: 'ghost',
     size: 'small',
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+};
+
+export const Pending: Story = {
+  args: {
+    pending: true,
   },
 };

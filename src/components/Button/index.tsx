@@ -11,7 +11,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         onClick={onClick}
         ref={ref}
       >
-        {children}
+        {pending ? 'loading...' : children}
       </button>
     );
   },
