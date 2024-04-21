@@ -107,7 +107,7 @@ export const buttonStyles = recipe({
       },
     },
     {
-      variants: { variant: 'ghost', color: 'primary' }, // 한 번에 여러가지를 처리하는 방법?
+      variants: { variant: 'ghost', color: 'primary' },
       style: {
         color: vars.colors.primary,
         selectors: {
@@ -118,7 +118,7 @@ export const buttonStyles = recipe({
       },
     },
     {
-      variants: { variant: 'ghost', color: 'secondary' }, // 한 번에 여러가지를 처리하는 방법?
+      variants: { variant: 'ghost', color: 'secondary' },
       style: {
         color: vars.colors.secondary,
         selectors: {
@@ -129,7 +129,7 @@ export const buttonStyles = recipe({
       },
     },
     {
-      variants: { variant: 'ghost', color: 'negative' }, // 한 번에 여러가지를 처리하는 방법?
+      variants: { variant: 'ghost', color: 'negative' },
       style: {
         color: vars.colors.negative,
         selectors: {
