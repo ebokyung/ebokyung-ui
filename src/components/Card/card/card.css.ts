@@ -6,6 +6,7 @@ export const cardContainer = style({
   borderRadius: '0.5rem',
   backgroundColor: 'white',
   overflow: 'hidden',
+  width: '100%',
 });
 
 export const cardStyles = recipe({
@@ -13,13 +14,13 @@ export const cardStyles = recipe({
   variants: {
     size: {
       large: {
-        width: '448px',
+        maxWidth: '448px',
       },
       medium: {
-        width: '380px',
+        maxWidth: '380px',
       },
       small: {
-        width: '320px',
+        maxWidth: '320px',
       },
     },
     // direction: {
