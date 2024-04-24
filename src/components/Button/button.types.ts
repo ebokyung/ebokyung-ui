@@ -7,12 +7,13 @@ export type ButtonSize = 'large' | 'medium' | 'small' | 'xSmall';
 export type ButtonColor = 'primary' | 'secondary' | 'negative';
 
 export type ButtonProps = {
-  variant: ButtonVariant;
-  size: ButtonSize;
-  color: ButtonColor;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  color?: ButtonColor;
+  stretch?: boolean;
   prefix?: ReactNode;
   postfix?: ReactNode;
-  children: string;
+  children?: string;
   pending?: boolean;
   disabled?: boolean;
   className?: string;
