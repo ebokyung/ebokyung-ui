@@ -7,6 +7,7 @@ export const cardContainer = style({
   backgroundColor: 'white',
   overflow: 'hidden',
   width: '100%',
+  display: 'flex',
 });
 
 export const cardStyles = recipe({
@@ -23,20 +24,18 @@ export const cardStyles = recipe({
         maxWidth: '320px',
       },
     },
-    // direction: {
-    //   row: {
-    //     flexDirection: 'row',
-    //   },
-    //   column: {
-    //     flexDirection: 'column',
-    //   },
-    // },
-    // justify: {
-
-    // },
-    // align: {},
+    direction: {
+      row: {
+        flexDirection: 'row',
+        maxWidth: 'none',
+      },
+      column: {
+        flexDirection: 'column',
+      },
+    },
   },
   defaultVariants: {
     size: 'large',
+    direction: 'column',
   },
 });

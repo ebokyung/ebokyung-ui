@@ -4,5 +4,4 @@ export const header = style({
   padding: '1rem',
   display: 'flex',
   flexDirection: 'row',
-  gap: '10px',
 });

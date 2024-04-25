@@ -6,4 +6,5 @@ export type CardProps = {
   className?: string;
   children?: ReactNode;
   size?: CardSize;
+  direction?: 'column' | 'row';
 };
