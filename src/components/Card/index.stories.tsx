@@ -27,22 +27,35 @@ const meta: Meta<typeof Card> = {
       options: ['large', 'medium', 'small'],
       control: { type: 'select' },
     },
+    direction: {
+      options: ['column', 'row'],
+      control: { type: 'select' },
+    },
   },
+  render: props => (
+    <Card size={props.size} direction={props.direction}>
+      {props.children}
+    </Card>
+  ),
 };
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Basic = () => (
-  <Card>
-    <CardHeader>
-      <CardTitle> Customer dashboard</CardTitle>
-    </CardHeader>
-    <CardBody>
-      <p>View a summary of all your customers over the last month.</p>
-    </CardBody>
-  </Card>
-);
+export const Basic: Story = {
+  args: {
+    children: (
+      <>
+        <CardHeader>
+          <CardTitle> Customer dashboard</CardTitle>
+        </CardHeader>
+        <CardBody>
+          <p>View a summary of all your customers over the last month.</p>
+        </CardBody>
+      </>
+    ),
+  },
+};
 
 export const Sizes: Story = {
   render: () => (
@@ -150,20 +163,23 @@ export const Advanced: Story = {
 };
 
 export const HorizontalCard: Story = {
-  render: () => (
-    <Card direction="row">
-      <CardImage maxW="200px" src={dummy.imgSrc} alt={dummy.imgAlt} />
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <CardBody>
-          <CardTitle>The perfect latte</CardTitle>
-          <p>Caffè latte is a coffee beverage of Italian origin made with espresso and steamed milk.</p>
-        </CardBody>
-        <CardFooter>
-          <div style={{ minWidth: '40%' }}>
-            <Button stretch>Buy Latte</Button>
-          </div>
-        </CardFooter>
-      </div>
-    </Card>
-  ),
+  args: {
+    direction: 'row',
+    children: (
+      <>
+        <CardImage maxW="200px" src={dummy.imgSrc} alt={dummy.imgAlt} />
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <CardBody>
+            <CardTitle>The perfect latte</CardTitle>
+            <p>Caffè latte is a coffee beverage of Italian origin made with espresso and steamed milk.</p>
+          </CardBody>
+          <CardFooter>
+            <div style={{ minWidth: '40%' }}>
+              <Button stretch>Buy Latte</Button>
+            </div>
+          </CardFooter>
+        </div>
+      </>
+    ),
+  },
 };
