@@ -3,7 +3,6 @@ import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
 const baseStyles = style({
-  width: '100%',
   display: 'flex',
   alignItems: 'center',
   gap: '0.4em',
@@ -65,6 +64,7 @@ const colorStyles = {
 
 const stretchStyles = {
   true: {
+    width: '100%',
     maxWidth: 'none',
     flex: 1,
   },
