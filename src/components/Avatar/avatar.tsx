@@ -10,7 +10,7 @@ type ImageProps = {
   classname?: string;
 };
 
-export const Avatar = forwardRef<HTMLImageElement, ImageProps>(
+export const Avatar = forwardRef<HTMLDivElement, ImageProps>(
   ({ src, name, circle = true, objectFit, classname }, ref) => {
     return (
       <div ref={ref} className={cx(avatarCoverStyle({ circle }), classname)}>
