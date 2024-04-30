@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Card, CardHeader, CardTitle, CardBody, CardFooter, CardImage, Button } from '@/components';
 import { Avatar } from '@/components/Avatar';
-import { CardSize } from './card/card.types';
 import '@/styles/reset.css';
 
 const dummy = {
@@ -90,7 +89,9 @@ export const WithImage: Story = {
           <p>{dummy.content}</p>
         </CardBody>
         <CardFooter>
-          <Button color="secondary">button</Button>
+          <Button color="secondary" onClick={() => alert('Clicked!')}>
+            button
+          </Button>
         </CardFooter>
       </>
     ),
@@ -114,10 +115,10 @@ export const WithImageInBody: Story = {
         </CardBody>
         <CardFooter>
           <div style={{ width: '100%', display: 'flex', gap: '0.5rem' }}>
-            <Button variant="solid" stretch>
+            <Button stretch onClick={() => alert('Clicked!')}>
               Buy now
             </Button>
-            <Button variant="ghost" stretch>
+            <Button variant="ghost" stretch onClick={() => alert('Clicked!')}>
               Add to cart
             </Button>
           </div>
@@ -137,7 +138,9 @@ export const Advanced: Story = {
             <CardTitle>Segun Adebayo</CardTitle>
             <p>Creator, Chakra UI</p>
           </div>
-          <Button variant="ghost" color="secondary" size="small" prefix="⠇" />
+          <Button variant="ghost" color="secondary" size="small" onClick={() => alert('더보기 클릭')}>
+            더보기
+          </Button>
         </CardHeader>
         <CardBody>
           <p>
@@ -147,13 +150,13 @@ export const Advanced: Story = {
         </CardBody>
         <CardImage src={dummy.imgSrc} alt={dummy.imgAlt} />
         <CardFooter>
-          <Button variant="ghost" color="primary" prefix="👍🏻" stretch>
+          <Button variant="ghost" color="primary" prefix="👍🏻" stretch onClick={() => alert('like 클릭')}>
             Like
           </Button>
-          <Button variant="ghost" color="primary" prefix="💬" stretch>
+          <Button variant="ghost" color="primary" prefix="💬" stretch onClick={() => alert('comment 클릭')}>
             Comment
           </Button>
-          <Button variant="ghost" color="primary" prefix="🏹" stretch>
+          <Button variant="ghost" color="primary" prefix="🏹" stretch onClick={() => alert('share 클릭')}>
             Share
           </Button>
         </CardFooter>
@@ -175,7 +178,9 @@ export const HorizontalCard: Story = {
           </CardBody>
           <CardFooter>
             <div style={{ minWidth: '40%' }}>
-              <Button stretch>Buy Latte</Button>
+              <Button stretch onClick={() => alert('buy latte 클릭')}>
+                Buy Latte
+              </Button>
             </div>
           </CardFooter>
         </div>

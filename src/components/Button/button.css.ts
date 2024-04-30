@@ -1,6 +1,6 @@
 import { vars } from '@/styles/vars.css';
 import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
+import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
 const baseStyles = style({
   display: 'flex',
@@ -159,6 +159,8 @@ export const buttonStyles = recipe({
     color: 'primary',
   },
 });
+
+export type ButtonStylesProps = RecipeVariants<typeof buttonStyles>;
 
 export const wrapper = style({
   display: 'flex',

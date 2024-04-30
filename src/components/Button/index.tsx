@@ -1,21 +1,30 @@
-import { forwardRef } from 'react';
-import { buttonStyles } from './button.css';
-import { ButtonProps } from './button.types';
+import { MouseEventHandler, ReactNode, forwardRef } from 'react';
+import { ButtonStylesProps, buttonStyles } from './button.css';
+import { BasicProps } from '@/types';
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export type ButtonProps = Omit<BasicProps, 'children'> & {
+  children: ReactNode;
+  prefix?: ReactNode;
+  postfix?: ReactNode;
+  pending?: boolean;
+  disabled?: boolean;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+};
+
+export const Button = forwardRef<HTMLButtonElement, ButtonStylesProps & ButtonProps>(
   (
     {
       variant = 'solid',
       size = 'medium',
       color = 'primary',
+      stretch = false,
+      className,
+      children,
       prefix,
       postfix,
-      stretch = false,
-      children,
+      pending = false,
       disabled = false,
       onClick,
-      className,
-      pending = false,
     },
     ref,
   ) => {
