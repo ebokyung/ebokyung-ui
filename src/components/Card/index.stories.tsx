@@ -133,7 +133,9 @@ export const Advanced: Story = {
     children: (
       <>
         <CardHeader>
-          <Avatar src={dummy.avatarSrc} name={dummy.avatarName} circle />
+          <Avatar>
+            <img src={dummy.avatarSrc} alt={dummy.avatarName} />
+          </Avatar>
           <div style={{ flex: 1, marginRight: '1rem' }}>
             <CardTitle>Segun Adebayo</CardTitle>
             <p>Creator, Chakra UI</p>

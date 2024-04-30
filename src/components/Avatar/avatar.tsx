@@ -1,21 +1,16 @@
 import { cx } from '@/utils/cx';
-import { avatarCoverStyle, avatarStyle } from './avatar.css';
-import { forwardRef } from 'react';
+import { avatar } from './avatar.css';
+import { ReactNode, forwardRef } from 'react';
+import { BasicProps } from '@/types';
 
-type ImageProps = {
-  src: string;
-  name: string;
-  circle?: boolean;
-  objectFit?: 'cover' | 'contain';
-  classname?: string;
+type ImageProps = Omit<BasicProps, 'children'> & {
+  children: ReactNode;
 };
 
-export const Avatar = forwardRef<HTMLDivElement, ImageProps>(
-  ({ src, name, circle = true, objectFit, classname }, ref) => {
-    return (
-      <div ref={ref} className={cx(avatarCoverStyle({ circle }), classname)}>
-        <img src={src} alt={name} className={avatarStyle({ objectFit })} />
-      </div>
-    );
-  },
-);
+export const Avatar = forwardRef<HTMLDivElement, ImageProps>(({ children, className }, ref) => {
+  return (
+    <div ref={ref} className={cx(avatar, className)}>
+      {children}
+    </div>
+  );
+});
