@@ -1,4 +1,4 @@
-import { recipe } from '@vanilla-extract/recipes';
+import { RecipeVariants, recipe } from '@vanilla-extract/recipes';
 import { style } from '@vanilla-extract/css';
 
 export const cardContainer = style({
@@ -39,3 +39,5 @@ export const cardStyles = recipe({
     direction: 'column',
   },
 });
+
+export type CardStylesProps = RecipeVariants<typeof cardStyles>;

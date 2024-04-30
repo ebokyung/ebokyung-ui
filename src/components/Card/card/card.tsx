@@ -1,9 +1,11 @@
 import { forwardRef } from 'react';
-import { CardProps } from './card.types';
 import { cx } from '@/utils/cx';
-import { cardStyles } from './card.css';
+import { CardStylesProps, cardStyles } from './card.css';
+import { BasicProps } from '@/types';
 
-export const Card = forwardRef<HTMLDivElement, CardProps>(
+type CardProps = BasicProps;
+
+export const Card = forwardRef<HTMLDivElement, CardStylesProps & CardProps>(
   ({ size = 'medium', direction = 'column', className, children }, ref) => {
     return (
       <div ref={ref} className={cx(cardStyles({ size, direction }), className)}>
