@@ -1,7 +1,9 @@
 import { forwardRef } from 'react';
-import { CardFooterProps } from './card-footer.types';
 import { cx } from '@/utils/cx';
 import { footer } from './card-footer.css';
+import { BasicProps } from '@/types';
+
+type CardFooterProps = BasicProps;
 
 export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(({ children, className }, ref) => {
   return (

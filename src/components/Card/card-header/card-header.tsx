@@ -1,7 +1,9 @@
 import { forwardRef } from 'react';
-import { CardHeaderProps } from './card-header.types';
 import { cx } from '@/utils/cx';
 import { header } from './card-header.css';
+import { BasicProps } from '@/types';
+
+type CardHeaderProps = BasicProps;
 
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(({ className, children }, ref) => {
   return (

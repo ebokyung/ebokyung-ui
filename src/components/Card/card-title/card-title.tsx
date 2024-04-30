@@ -1,7 +1,9 @@
 import { forwardRef } from 'react';
-import { CardTitleProps } from './card-title.types';
 import { cx } from '@/utils/cx';
 import { title } from './card-title.css';
+import { BasicProps } from '@/types';
+
+type CardTitleProps = BasicProps;
 
 export const CardTitle = forwardRef<HTMLDivElement, CardTitleProps>(({ children, className }, ref) => {
   return (

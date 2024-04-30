@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export type CardHeaderProps = {
-  className?: string;
+export type BasicProps = {
   children?: ReactNode;
+  className?: string;
 };
