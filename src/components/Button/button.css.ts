@@ -1,9 +1,8 @@
 import { vars } from '@/styles/vars.css';
 import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
+import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
 const baseStyles = style({
-  width: '100%',
   display: 'flex',
   alignItems: 'center',
   gap: '0.4em',
@@ -15,6 +14,7 @@ const baseStyles = style({
     pointerEvents: 'none',
     opacity: 0.4,
   },
+  justifyContent: 'center',
 });
 
 const variantStyles = {
@@ -37,18 +37,22 @@ const sizeStyles = {
   xSmall: {
     padding: '0.25rem 0.5rem',
     fontSize: '0.75rem',
+    maxWidth: '60px',
   },
   small: {
     padding: '0.5rem 1rem',
     fontSize: '0.875rem',
+    maxWidth: '66px',
   },
   medium: {
     padding: '0.5rem 1rem',
     fontSize: '1rem',
+    maxWidth: '84px',
   },
   large: {
     padding: '0.75rem 1.5rem',
     fontSize: '1.125rem',
+    maxWidth: '88px',
   },
 };
 
@@ -58,12 +62,21 @@ const colorStyles = {
   negative: {},
 };
 
+const stretchStyles = {
+  true: {
+    width: '100%',
+    maxWidth: 'none',
+    flex: 1,
+  },
+};
+
 export const buttonStyles = recipe({
   base: baseStyles,
   variants: {
     variant: variantStyles,
     size: sizeStyles,
     color: colorStyles,
+    stretch: stretchStyles,
   },
   compoundVariants: [
     {
@@ -146,6 +159,8 @@ export const buttonStyles = recipe({
     color: 'primary',
   },
 });
+
+export type ButtonStylesProps = RecipeVariants<typeof buttonStyles>;
 
 export const wrapper = style({
   display: 'flex',
