@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from '.';
 import { wrapper } from './button.css';
-import { ButtonColor } from './button.types';
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
@@ -35,7 +34,8 @@ const meta: Meta<typeof Button> = {
   render: props => (
     <div className={wrapper}>
       {['primary', 'secondary', 'negative'].map(item => (
-        <Button {...props} color={item as ButtonColor}>
+        // TODO: type 부분 고민
+        <Button {...props} color={item as typeof props.color} onClick={() => alert('Clicked!')}>
           Button
         </Button>
       ))}
@@ -49,7 +49,6 @@ type Story = StoryObj<typeof meta>;
 export const DefaultOnClick: Story = {
   args: {
     children: 'On click!',
-    onClick: () => alert('Clicked!'),
   },
 };
 
