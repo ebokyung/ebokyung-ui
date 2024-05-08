@@ -1,44 +1,41 @@
-import { BasicProps } from '@/types';
-import { forwardRef } from 'react';
+import { ReactNode, useState } from 'react';
+import { Accordion } from './accordion';
 
-const Accordion = forwardRef<HTMLUListElement, BasicProps>(({ children, className }, ref) => {
+type item = {
+  id: string;
+  title: ReactNode;
+  content: ReactNode;
+};
+
+type MyAccordionProps = {
+  data: item[];
+  allowMultiple?: boolean;
+};
+
+export const MyAccordion = ({ data, allowMultiple = false }: MyAccordionProps) => {
+  const [expanded, setExpanded] = useState<unknown[]>([]);
+
+  const singleToggle = id => {
+    if (expanded.includes(id)) setExpanded([]);
+    else setExpanded([id]);
+  };
+
+  const multipleToggle = id => {
+    if (expanded.includes(id)) setExpanded(prev => prev.filter(itemId => itemId !== id));
+    else setExpanded(prev => prev.concat(id));
+  };
+
+  const toggle = allowMultiple ? multipleToggle : singleToggle;
   return (
-    <ul ref={ref} style={{ display: 'flex', flexDirection: 'column' }} className={className}>
-      {children}
-    </ul>
+    <Accordion>
+      {data.map(item => (
+        <Accordion.Item key={item.id}>
+          <Accordion.Trigger expanded={expanded.includes(item.id)} onClick={() => toggle(item.id)}>
+            {item.title}
+          </Accordion.Trigger>
+          <Accordion.Panel expanded={expanded.includes(item.id)}>{item.content}</Accordion.Panel>
+        </Accordion.Item>
+      ))}
+    </Accordion>
   );
-});
-
-const AccordionItem = forwardRef<HTMLLIElement, BasicProps>(({ children, className }, ref) => {
-  return (
-    <li ref={ref} style={{ padding: '0.5rem' }} className={className}>
-      {children}
-    </li>
-  );
-});
-
-const AccordionTrigger = forwardRef<HTMLButtonElement, BasicProps>(({ icon, children, className }, ref) => {
-  return (
-    <button ref={ref} style={{ display: 'flex', alignContent: 'space-between', width: '100%' }} className={className}>
-      {/* ellips */}
-      <span style={{ flex: 1, textAlign: 'left' }}>{children}</span>
-      {icon === 'arrow' ? '>' : '+'}
-    </button>
-  );
-});
-
-const AccordionPanel = forwardRef<HTMLDivElement, BasicProps>(({ children, className }, ref) => {
-  return (
-    <div ref={ref} style={{}} className={className}>
-      {children}
-    </div>
-  );
-});
-
-const AccordionCompound = Object.assign(Accordion, {
-  Item: AccordionItem,
-  Trigger: AccordionTrigger,
-  Panel: AccordionPanel,
-});
-
-export { AccordionCompound as Accordion };
+};
