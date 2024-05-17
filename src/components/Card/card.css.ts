@@ -1,5 +1,5 @@
+import { createVar, style } from '@vanilla-extract/css';
 import { RecipeVariants, recipe } from '@vanilla-extract/recipes';
-import { style } from '@vanilla-extract/css';
 
 export const cardContainer = style({
   border: '1px solid lightgray',
@@ -41,3 +41,36 @@ export const cardStyles = recipe({
 });
 
 export type CardStylesProps = RecipeVariants<typeof cardStyles>;
+
+export const body = style({
+  padding: '1rem',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.5rem',
+});
+
+export const footer = style({
+  padding: '1rem',
+  display: 'flex',
+  alignItems: 'center',
+});
+
+export const header = style({
+  padding: '1rem',
+  display: 'flex',
+  flexDirection: 'row',
+});
+
+export const maxWidth = createVar();
+
+export const image = style({
+  width: '100%',
+  verticalAlign: 'top',
+  objectFit: 'cover',
+  maxWidth: maxWidth,
+});
+
+export const title = style({
+  fontSize: '1.4rem',
+  fontWeight: 'bold',
+});

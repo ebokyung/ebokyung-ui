@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Card, CardHeader, CardTitle, CardBody, CardFooter, CardImage, Button } from '@/components';
-import { Avatar } from '@/components/Avatar';
+import { Card, Button, Avatar } from '@/components';
 import '@/styles/reset.css';
 
 const dummy = {
@@ -45,12 +44,12 @@ export const Basic: Story = {
   args: {
     children: (
       <>
-        <CardHeader>
-          <CardTitle> Customer dashboard</CardTitle>
-        </CardHeader>
-        <CardBody>
+        <Card.Header>
+          <Card.Title> Customer dashboard</Card.Title>
+        </Card.Header>
+        <Card.Body>
           <p>View a summary of all your customers over the last month.</p>
-        </CardBody>
+        </Card.Body>
       </>
     ),
   },
@@ -61,13 +60,13 @@ export const Sizes: Story = {
     <div>
       {['small', 'medium', 'large'].map(size => (
         <Card key={size} size={size as CardSize}>
-          <CardHeader>
-            <CardTitle>{size}</CardTitle>
-          </CardHeader>
-          <CardBody>
+          <Card.Header>
+            <Card.Title>{size}</Card.Title>
+          </Card.Header>
+          <Card.Body>
             <p>size = {size}</p>
             <p>{dummy.content}</p>
-          </CardBody>
+          </Card.Body>
         </Card>
       ))}
     </div>
@@ -78,21 +77,21 @@ export const WithImage: Story = {
   args: {
     children: (
       <>
-        <CardHeader>
+        <Card.Header>
           <div>
-            <CardTitle>{dummy.title}</CardTitle>
+            <Card.Title>{dummy.title}</Card.Title>
             <p>header description</p>
           </div>
-        </CardHeader>
-        <CardImage src={dummy.imgSrc} alt={dummy.imgAlt} />
-        <CardBody>
+        </Card.Header>
+        <Card.Image src={dummy.imgSrc} alt={dummy.imgAlt} />
+        <Card.Body>
           <p>{dummy.content}</p>
-        </CardBody>
-        <CardFooter>
+        </Card.Body>
+        <Card.Footer>
           <Button color="secondary" onClick={() => alert('Clicked!')}>
             button
           </Button>
-        </CardFooter>
+        </Card.Footer>
       </>
     ),
   },
@@ -102,18 +101,18 @@ export const WithImageInBody: Story = {
   args: {
     children: (
       <>
-        <CardBody>
-          <CardImage src={dummy.imgSrc} alt={dummy.imgAlt} />
+        <Card.Body>
+          <Card.Image src={dummy.imgSrc} alt={dummy.imgAlt} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <CardTitle>Living room Sofa</CardTitle>
+            <Card.Title>Living room Sofa</Card.Title>
             <p>
               This sofa is perfect for modern tropical spaces, baroque inspired spaces, earthy toned spaces and for
               people who love a chic design with a sprinkle of vintage design.
             </p>
             <p>$450</p>
           </div>
-        </CardBody>
-        <CardFooter>
+        </Card.Body>
+        <Card.Footer>
           <div style={{ width: '100%', display: 'flex', gap: '0.5rem' }}>
             <Button stretch onClick={() => alert('Clicked!')}>
               Buy now
@@ -122,7 +121,7 @@ export const WithImageInBody: Story = {
               Add to cart
             </Button>
           </div>
-        </CardFooter>
+        </Card.Footer>
       </>
     ),
   },
@@ -132,26 +131,26 @@ export const Advanced: Story = {
   args: {
     children: (
       <>
-        <CardHeader>
+        <Card.Header>
           <Avatar>
             <img src={dummy.avatarSrc} alt={dummy.avatarName} />
           </Avatar>
           <div style={{ flex: 1, marginRight: '1rem' }}>
-            <CardTitle>Segun Adebayo</CardTitle>
+            <Card.Title>Segun Adebayo</Card.Title>
             <p>Creator, Chakra UI</p>
           </div>
           <Button variant="ghost" color="secondary" size="small" onClick={() => alert('더보기 클릭')}>
             더보기
           </Button>
-        </CardHeader>
-        <CardBody>
+        </Card.Header>
+        <Card.Body>
           <p>
             With Chakra UI, I wanted to sync the speed of development with the speed of design. I wanted the developer
             to be just as excited as the designer to create a screen.
           </p>
-        </CardBody>
-        <CardImage src={dummy.imgSrc} alt={dummy.imgAlt} />
-        <CardFooter>
+        </Card.Body>
+        <Card.Image src={dummy.imgSrc} alt={dummy.imgAlt} />
+        <Card.Footer>
           <Button variant="ghost" color="primary" prefix="👍🏻" stretch onClick={() => alert('like 클릭')}>
             Like
           </Button>
@@ -161,7 +160,7 @@ export const Advanced: Story = {
           <Button variant="ghost" color="primary" prefix="🏹" stretch onClick={() => alert('share 클릭')}>
             Share
           </Button>
-        </CardFooter>
+        </Card.Footer>
       </>
     ),
   },
@@ -172,19 +171,19 @@ export const HorizontalCard: Story = {
     direction: 'row',
     children: (
       <>
-        <CardImage maxW="200px" src={dummy.imgSrc} alt={dummy.imgAlt} />
+        <Card.Image maxW="200px" src={dummy.imgSrc} alt={dummy.imgAlt} />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <CardBody>
-            <CardTitle>The perfect latte</CardTitle>
+          <Card.Body>
+            <Card.Title>The perfect latte</Card.Title>
             <p>Caffè latte is a coffee beverage of Italian origin made with espresso and steamed milk.</p>
-          </CardBody>
-          <CardFooter>
+          </Card.Body>
+          <Card.Footer>
             <div style={{ minWidth: '40%' }}>
               <Button stretch onClick={() => alert('buy latte 클릭')}>
                 Buy Latte
               </Button>
             </div>
-          </CardFooter>
+          </Card.Footer>
         </div>
       </>
     ),

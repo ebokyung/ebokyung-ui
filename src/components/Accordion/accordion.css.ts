@@ -23,12 +23,7 @@ export const title = style({
 });
 
 export const content = style({
-  display: 'none',
   padding: '1rem 0',
   borderTop: '1px dashed #ccc',
   fontSize: '0.875rem',
-});
-
-export const show = style({
-  display: 'block',
 });

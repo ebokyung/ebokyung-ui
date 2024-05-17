@@ -1,46 +1,68 @@
 import { BasicProps } from '@/types';
-import { forwardRef } from 'react';
-import { container, item, trigger, title, content, show } from './accordion.css';
+import { forwardRef, useState } from 'react';
+import { container, item, trigger, title, content } from './accordion.css';
 import { cx } from '@/utils/cx';
+import { AccordionContext, useAccordionContext } from './context/accordion-context';
+import { AccordionItemContext, useAccordionItemContext } from './context/accordion-item-context';
 
-const Accordion = forwardRef<HTMLUListElement, BasicProps>(({ children, className }, ref) => {
+type AccordionProps = BasicProps & {
+  allowMultiple: boolean;
+};
+const Accordion = forwardRef<HTMLUListElement, AccordionProps>(({ allowMultiple, children, className }, ref) => {
+  const [expandedItems, setExpandedItems] = useState<unknown[]>([]);
+
+  const singleToggle = id => {
+    if (expandedItems.includes(id)) setExpandedItems([]);
+    else setExpandedItems([id]);
+  };
+
+  const multipleToggle = id => {
+    if (expandedItems.includes(id)) setExpandedItems(prev => prev.filter(itemId => itemId !== id));
+    else setExpandedItems(prev => prev.concat(id));
+  };
+
+  const handleToggle = allowMultiple ? multipleToggle : singleToggle;
+
   return (
-    <ul ref={ref} className={cx(container, className)}>
-      {children}
-    </ul>
+    <AccordionContext.Provider value={{ expandedItems, handleToggle }}>
+      <ul ref={ref} className={cx(container, className)}>
+        {children}
+      </ul>
+    </AccordionContext.Provider>
   );
 });
 
-const AccordionItem = forwardRef<HTMLLIElement, BasicProps>(({ children, className }, ref) => {
+type AccordionItemProps = BasicProps & {
+  id: string;
+};
+const AccordionItem = forwardRef<HTMLLIElement, AccordionItemProps>(({ id, children, className }, ref) => {
   return (
-    <li ref={ref} className={cx(item, className)}>
-      {children}
-    </li>
+    <AccordionItemContext.Provider value={{ id }}>
+      <li ref={ref} className={cx(item, className)}>
+        {children}
+      </li>
+    </AccordionItemContext.Provider>
   );
 });
 
-type AccordionTriggerProps = BasicProps & {
-  expanded: boolean;
-  onClick: () => void;
-};
-const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
-  ({ expanded, onClick, children, className }, ref) => {
-    return (
-      <button ref={ref} className={cx(trigger, className)} onClick={onClick}>
-        {/* ellips */}
-        <span className={title}>{children}</span>
-        {expanded ? '-' : '+'}
-      </button>
-    );
-  },
-);
+const AccordionTrigger = forwardRef<HTMLButtonElement, BasicProps>(({ children, className }, ref) => {
+  const { expandedItems, handleToggle } = useAccordionContext();
+  const { id } = useAccordionItemContext();
 
-type AccordionPanelProps = BasicProps & {
-  expanded: boolean;
-};
-const AccordionPanel = forwardRef<HTMLDivElement, AccordionPanelProps>(({ expanded, children, className }, ref) => {
   return (
-    <div ref={ref} className={`${content} ${expanded ? show : ''} ${className}`}>
+    <button ref={ref} className={cx(trigger, className)} onClick={() => handleToggle(id)}>
+      {/* ellips */}
+      <span className={title}>{children}</span>
+      {expandedItems.includes(id) ? '-' : '+'}
+    </button>
+  );
+});
+
+const AccordionPanel = forwardRef<HTMLDivElement, BasicProps>(({ children, className }, ref) => {
+  const { expandedItems } = useAccordionContext();
+  const { id } = useAccordionItemContext();
+  return (
+    <div ref={ref} className={cx(content, className)} hidden={!expandedItems.includes(id)}>
       {children}
     </div>
   );
