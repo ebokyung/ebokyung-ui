@@ -5,34 +5,32 @@ import { cx } from '@/utils/cx';
 import { AccordionContext, useAccordionContext } from './context/accordion-context';
 import { AccordionItemContext, useAccordionItemContext } from './context/accordion-item-context';
 
-type AccordionProps = {
+type AccordionProps = BasicProps & {
   allowMultiple: boolean;
 };
-const Accordion = forwardRef<HTMLUListElement, BasicProps & AccordionProps>(
-  ({ allowMultiple, children, className }, ref) => {
-    const [expandedItems, setExpandedItems] = useState<unknown[]>([]);
+const Accordion = forwardRef<HTMLUListElement, AccordionProps>(({ allowMultiple, children, className }, ref) => {
+  const [expandedItems, setExpandedItems] = useState<unknown[]>([]);
 
-    const singleToggle = id => {
-      if (expandedItems.includes(id)) setExpandedItems([]);
-      else setExpandedItems([id]);
-    };
+  const singleToggle = id => {
+    if (expandedItems.includes(id)) setExpandedItems([]);
+    else setExpandedItems([id]);
+  };
 
-    const multipleToggle = id => {
-      if (expandedItems.includes(id)) setExpandedItems(prev => prev.filter(itemId => itemId !== id));
-      else setExpandedItems(prev => prev.concat(id));
-    };
+  const multipleToggle = id => {
+    if (expandedItems.includes(id)) setExpandedItems(prev => prev.filter(itemId => itemId !== id));
+    else setExpandedItems(prev => prev.concat(id));
+  };
 
-    const handleToggle = allowMultiple ? multipleToggle : singleToggle;
+  const handleToggle = allowMultiple ? multipleToggle : singleToggle;
 
-    return (
-      <AccordionContext.Provider value={{ expandedItems, handleToggle }}>
-        <ul ref={ref} className={cx(container, className)}>
-          {children}
-        </ul>
-      </AccordionContext.Provider>
-    );
-  },
-);
+  return (
+    <AccordionContext.Provider value={{ expandedItems, handleToggle }}>
+      <ul ref={ref} className={cx(container, className)}>
+        {children}
+      </ul>
+    </AccordionContext.Provider>
+  );
+});
 
 type AccordionItemProps = BasicProps & {
   id: string;
