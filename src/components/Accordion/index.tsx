@@ -16,9 +16,9 @@ export const MyAccordion = ({ data, allowMultiple = false }: MyAccordionProps) =
   return (
     <Accordion allowMultiple={allowMultiple}>
       {data.map(item => (
-        <Accordion.Item key={item.id}>
-          <Accordion.Trigger id={item.id}>{item.title}</Accordion.Trigger>
-          <Accordion.Panel id={item.id}>{item.content}</Accordion.Panel>
+        <Accordion.Item key={item.id} id={item.id}>
+          <Accordion.Trigger>{item.title}</Accordion.Trigger>
+          <Accordion.Panel>{item.content}</Accordion.Panel>
         </Accordion.Item>
       ))}
     </Accordion>

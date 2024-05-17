@@ -3,6 +3,7 @@ import { forwardRef, useState } from 'react';
 import { container, item, trigger, title, content, show } from './accordion.css';
 import { cx } from '@/utils/cx';
 import { AccordionContext, useAccordionContext } from './context/accordion-context';
+import { AccordionItemContext, useAccordionItemContext } from './context/accordion-item-context';
 
 type AccordionProps = {
   allowMultiple: boolean;
@@ -33,19 +34,23 @@ const Accordion = forwardRef<HTMLUListElement, BasicProps & AccordionProps>(
   },
 );
 
-const AccordionItem = forwardRef<HTMLLIElement, BasicProps>(({ children, className }, ref) => {
+type AccordionItemProps = BasicProps & {
+  id: string;
+};
+const AccordionItem = forwardRef<HTMLLIElement, AccordionItemProps>(({ id, children, className }, ref) => {
   return (
-    <li ref={ref} className={cx(item, className)}>
-      {children}
-    </li>
+    <AccordionItemContext.Provider value={{ id }}>
+      <li ref={ref} className={cx(item, className)}>
+        {children}
+      </li>
+    </AccordionItemContext.Provider>
   );
 });
 
-type AccordionTriggerProps = BasicProps & {
-  id: string;
-};
-const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(({ id, children, className }, ref) => {
+const AccordionTrigger = forwardRef<HTMLButtonElement, BasicProps>(({ children, className }, ref) => {
   const { expandedItems, handleToggle } = useAccordionContext();
+  const { id } = useAccordionItemContext();
+
   return (
     <button ref={ref} className={cx(trigger, className)} onClick={() => handleToggle(id)}>
       {/* ellips */}
@@ -55,11 +60,9 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(({
   );
 });
 
-type AccordionPanelProps = BasicProps & {
-  id: string;
-};
-const AccordionPanel = forwardRef<HTMLDivElement, AccordionPanelProps>(({ id, children, className }, ref) => {
+const AccordionPanel = forwardRef<HTMLDivElement, BasicProps>(({ children, className }, ref) => {
   const { expandedItems } = useAccordionContext();
+  const { id } = useAccordionItemContext();
   return (
     <div ref={ref} className={`${content} ${expandedItems.includes(id) ? show : ''} ${className}`}>
       {children}
