@@ -1,6 +1,6 @@
 import { BasicProps } from '@/types';
 import { forwardRef, useState } from 'react';
-import { container, item, trigger, title, content, show } from './accordion.css';
+import { container, item, trigger, title, content } from './accordion.css';
 import { cx } from '@/utils/cx';
 import { AccordionContext, useAccordionContext } from './context/accordion-context';
 import { AccordionItemContext, useAccordionItemContext } from './context/accordion-item-context';
@@ -62,7 +62,7 @@ const AccordionPanel = forwardRef<HTMLDivElement, BasicProps>(({ children, class
   const { expandedItems } = useAccordionContext();
   const { id } = useAccordionItemContext();
   return (
-    <div ref={ref} className={`${content} ${expandedItems.includes(id) ? show : ''} ${className}`}>
+    <div ref={ref} className={cx(content, className)} hidden={!expandedItems.includes(id)}>
       {children}
     </div>
   );
