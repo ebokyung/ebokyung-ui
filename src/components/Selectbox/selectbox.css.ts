@@ -3,10 +3,11 @@ import { style } from '@vanilla-extract/css';
 export const selectContainer = style({
   position: 'relative',
   paddingBottom: '0.8rem',
+  // width: '10rem',
 });
 
 export const selectButton = style({
-  minWidth: '10rem',
+  width: '100%',
   height: '3rem',
   borderRadius: '0.5rem',
   border: '1px solid #c4c4c4',
@@ -42,7 +43,7 @@ export const optionList = style({
   top: '3.5rem',
   left: 0,
   zIndex: 10,
-  minWidth: '10rem',
+  width: '100%',
   border: '1px solid #c4c4c4',
   borderRadius: '0.5rem',
   background: '#fff',
