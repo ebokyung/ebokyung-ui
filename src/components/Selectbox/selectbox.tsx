@@ -69,7 +69,7 @@ export const Selectbox = forwardRef<HTMLDivElement, SelectboxProps>(
                     className={cx(optionButton, `${item.option === selectedOption ? 'selected' : ''}`)}
                     onClick={() => handleOptionSelect(item.option)}
                     onKeyDown={handleKeyDown}
-                    ref={ref => (optionRefs.current[index] = ref as HTMLButtonElement)}
+                    ref={(ref: HTMLButtonElement) => (optionRefs.current[index] = ref)}
                   >
                     {item.option}
                   </button>
