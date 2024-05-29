@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Selectbox } from '.';
-import 'src/styles/reset.css';
 import { useState } from 'react';
 
 const meta: Meta<typeof Selectbox> = {
