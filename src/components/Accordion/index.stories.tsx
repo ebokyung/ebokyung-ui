@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MyAccordion } from '.';
-import 'src/styles/reset.css';
 
 const dummy = [
   {
