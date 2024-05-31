@@ -1,6 +1,7 @@
-import { Dispatch, forwardRef, useEffect, useRef, useState } from 'react';
+import { Dispatch, forwardRef, useRef, useState } from 'react';
 import { selectContainer, selectButton, optionList, optionButton, optionItem } from './selectbox.css';
 import { cx } from '@/utils/cx';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
 
 type item = {
   value: NonNullable<string>;
@@ -20,19 +21,7 @@ export const Selectbox = forwardRef<HTMLDivElement, SelectboxProps>(
     const selectRef = useRef<HTMLDivElement>(null);
     const optionRefs = useRef<HTMLButtonElement[]>([]);
 
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-          setIsOpen(false);
-        }
-      };
-
-      document.addEventListener('click', handleClickOutside);
-
-      return () => {
-        document.removeEventListener('click', handleClickOutside);
-      };
-    }, []);
+    useOutsideClick(selectRef, () => setIsOpen(false));
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
       if (event.key === 'ArrowDown' || (event.key === 'Tab' && !event.shiftKey)) {
