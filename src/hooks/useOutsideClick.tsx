@@ -14,5 +14,5 @@ export function useOutsideClick(ref: RefObject<HTMLElement>, callback: () => voi
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, []);
+  }, [ref, callback]);
 }
