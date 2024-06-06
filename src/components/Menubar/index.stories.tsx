@@ -18,12 +18,21 @@ export const Default: Story = {
     return (
       <Menubar closeOnSelect>
         <Menubar.Menu>
+          <Menubar.Trigger>Edit</Menubar.Trigger>
+          <Menubar.Content>
+            <Menubar.Item>Share</Menubar.Item>
+            <Menubar.Separator />
+            <Menubar.Item disabled={true}>Print</Menubar.Item>
+          </Menubar.Content>
+        </Menubar.Menu>
+
+        <Menubar.Menu>
           {/* Trigger, Content는 Box 컴포넌트 as props로 변경가능하게 */}
           <Menubar.Trigger>File</Menubar.Trigger>
           <Menubar.Content
           // motion={}
           >
-            <Menubar.Item icon={'->'} shortcut={'⌘T'} isDisabled closeOnSelect>
+            <Menubar.Item icon={'🗂️'} shortcut={'⌘T'} disabled closeOnSelect>
               New Tab
             </Menubar.Item>
             <Menubar.Item
@@ -33,23 +42,14 @@ export const Default: Story = {
               Link
             </Menubar.Item>
             <Menubar.Separator />
-            <Menubar.Item icon={'->'} shortcut={'⌘T'}>
-              ShareShareShareShareShare
+            <Menubar.Item icon={'🔗'} shortcut={'⌘T'}>
+              Share
             </Menubar.Item>
             <Menubar.Separator />
             <Menubar.Item>Print</Menubar.Item>
             {/* menu group */}
             {/* <menuOptionGroup defaultValue type={checkbox | radio} value onChange> */}
             {/* <menuItemOption closeOnSelect shortcut/> */}
-          </Menubar.Content>
-        </Menubar.Menu>
-
-        <Menubar.Menu>
-          <Menubar.Trigger>Edit</Menubar.Trigger>
-          <Menubar.Content>
-            <Menubar.Item>Share</Menubar.Item>
-            <Menubar.Separator />
-            <Menubar.Item>Print</Menubar.Item>
           </Menubar.Content>
         </Menubar.Menu>
       </Menubar>

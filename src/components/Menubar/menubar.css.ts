@@ -3,7 +3,6 @@ import { createVar, globalStyle, style } from '@vanilla-extract/css';
 const bgColor = createVar();
 const hoverBgColor = createVar();
 const textColor = createVar();
-const hoverTextColor = createVar();
 const focusBgColor = createVar();
 const borderColor = createVar();
 
@@ -27,9 +26,11 @@ export const menubarTrigger = style({
   color: textColor,
   padding: '0.5rem 1rem',
   borderRadius: '0.25rem',
-  ':hover': {
-    backgroundColor: hoverBgColor,
-    color: hoverTextColor,
+  cursor: 'pointer',
+  selectors: {
+    '&.active': {
+      backgroundColor: hoverBgColor,
+    },
   },
 });
 
@@ -37,8 +38,9 @@ export const menubarContent = style({
   display: 'flex',
   flexDirection: 'column',
   position: 'absolute',
-  top: '2.5rem',
-  padding: '0.5rem 0',
+  top: '1rem',
+  marginTop: '1.5rem',
+  padding: '0.25rem',
   borderRadius: '0.5rem',
   border: '1px solid #c4c4c4',
   backgroundColor: bgColor,
@@ -47,45 +49,54 @@ export const menubarContent = style({
 export const menubarItem = style({
   display: 'flex',
   alignItems: 'center',
-  // justifyContent: 'space-between',
-  // gap: '0.5rem',
-  padding: '0.25rem 0.5rem',
+  padding: '0.5rem',
+  borderRadius: '0.25rem',
   color: textColor,
+  cursor: 'pointer',
   ':hover': {
     backgroundColor: hoverBgColor,
   },
-  ':focus': {
-    backgroundColor: focusBgColor,
+  selectors: {
+    '&.disabled': {
+      opacity: '0.3',
+      pointerEvents: 'none',
+    },
+    '&.disabled:hover': {
+      backgroundColor: 'inherit',
+    },
   },
 });
 
 export const itemIcon = style({
-  flexShrink: 0,
   marginRight: '0.5rem',
 });
-export const itemContent = style({ flexShrink: 0, flexGrow: 1 });
-export const itemShortcut = style({ flexShrink: 0, marginLeft: '0.5rem' });
-
-// export const menubarCommand = style({
-//     opacity: '0.8',
-//     fontSize: '0.875rem',
-//     paddingLeft: '1rem',
-//   });
+export const itemContent = style({
+  display: 'flex',
+  flexShrink: 0,
+  flexGrow: 1,
+  whiteSpace: 'nowrap',
+});
+export const itemShortcut = style({
+  display: 'flex',
+  marginLeft: '1rem',
+  fontSize: '0.875rem',
+  opacity: '0.5',
+});
 
 export const menubarSeparator = style({
-  margin: '0.5rem 0',
-  borderColor: borderColor,
+  margin: '0.25rem 0',
   borderBottom: '2px dotted',
+  borderColor: borderColor,
 });
+
+//
 
 export const menuThemeVars = {
   bgColor: 'teal.500',
-  hoverBgColor: 'gray',
-  // hoverBgColor: 'teal.600',
+  hoverBgColor: '#f4f4f5',
   textColor: 'gray.200',
-  hoverTextColor: 'white',
-  focusBgColor: 'teal.600',
-  borderColor: 'white',
+  focusBgColor: 'f4f4f5',
+  borderColor: '#d4d4d4',
 };
 
 globalStyle(':root', {
@@ -93,7 +104,6 @@ globalStyle(':root', {
     [bgColor]: menuThemeVars.bgColor,
     [hoverBgColor]: menuThemeVars.hoverBgColor,
     [textColor]: menuThemeVars.textColor,
-    [hoverTextColor]: menuThemeVars.hoverTextColor,
     [focusBgColor]: menuThemeVars.focusBgColor,
     [borderColor]: menuThemeVars.borderColor,
   },
