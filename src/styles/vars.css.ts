@@ -1,3 +1,4 @@
+// TODO: theme token 적용하고 삭제하기
 import { createGlobalTheme } from '@vanilla-extract/css';
 
 const colorPalette = {
