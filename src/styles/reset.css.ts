@@ -1,4 +1,4 @@
-import { globalStyle } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 globalStyle(
   'html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video',
@@ -19,10 +19,6 @@ globalStyle('body', {
   lineHeight: 1,
 });
 
-globalStyle('ol, ul', {
-  listStyle: 'none',
-});
-
 globalStyle('blockquote, q', {
   quotes: 'none',
 });
@@ -36,17 +32,27 @@ globalStyle('table', {
   borderSpacing: 0,
 });
 
-globalStyle('button', {
+const list = style({
+  listStyle: 'none',
+});
+
+const button = style({
   font: 'inherit',
   color: 'inherit',
-  border: 0,
-  margin: 0,
-  padding: 0,
   backgroundColor: 'initial',
   cursor: 'pointer',
 });
 
-globalStyle('a', {
+const a = style({
   textDecoration: 'none',
   color: 'inherit',
 });
+
+type Resets = Partial<Record<keyof JSX.IntrinsicElements, string>>;
+export const elementResets: Resets = {
+  ul: list,
+  ol: list,
+  a,
+  button,
+  // ...
+};

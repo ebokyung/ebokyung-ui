@@ -1,57 +1,47 @@
-import { ComponentProps, ElementType, HTMLAttributes, ReactNode, forwardRef, useEffect, useRef, useState } from 'react';
 import {
-  itemContent,
-  itemIcon,
-  itemShortcut,
-  menubar,
-  menubarContent,
-  menubarItem,
-  menubarMenu,
-  menubarSeparator,
-  menubarTrigger,
-} from './menubar.css';
+  ComponentProps,
+  ElementType,
+  HTMLAttributes,
+  ReactNode,
+  Ref,
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import * as styles from './menubar.css';
 import { cx } from '@/utils/cx';
 import { MenubarContext, MenubarMenuContext, useMenubarContext, useMenubarMenuContext } from './context';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
-
-type AsProps = {
-  as?: ElementType;
-};
-
-type HTMLProperties = Omit<HTMLAttributes<HTMLElement>, 'as'>;
-
-type BoxProps = AsProps & HTMLProperties;
-
-const Box = forwardRef<HTMLElement, BoxProps>(({ as, ...props }, ref) => {
-  const Component = as || 'div';
-  return <Component ref={ref} {...props} />;
-});
-
-//
+import { Box, BoxProps } from '../Box';
 
 interface MenubarProps extends ComponentProps<'div'> {
   closeOnSelect?: boolean;
 }
-const Menubar = forwardRef<HTMLDivElement, MenubarProps>(({ closeOnSelect = true, ...props }, ref) => {
-  // 클릭으로 메뉴 토글 관리
-  const [isOpen, setIsOpen] = useState(false);
-  // inOpen일때, 호버된 메뉴를 보이면서 마우스가 벗어나도 열려있도록 selected menu 변수로 관리
-  const [selectedMenu, setSelectedMenu] = useState<ReactNode | null>(null);
+const Menubar = forwardRef<HTMLDivElement, MenubarProps>(
+  ({ closeOnSelect = true, ...props }, ref: Ref<HTMLDivElement>) => {
+    // 클릭으로 메뉴 토글 관리
+    const [isOpen, setIsOpen] = useState(false);
+    // inOpen일때, 호버된 메뉴를 보이면서 마우스가 벗어나도 열려있도록 selected menu 변수로 관리
+    const [selectedMenu, setSelectedMenu] = useState<ReactNode | null>(null);
 
-  const closeMenu = () => {
-    setIsOpen(false);
-    setSelectedMenu(null);
-  };
+    const closeMenu = () => {
+      setIsOpen(false);
+      setSelectedMenu(null);
+    };
 
-  const menubarRef = useRef<HTMLDivElement>(null); // TODO: ref
-  useOutsideClick(menubarRef, () => closeMenu());
+    const menubarRef = useRef<HTMLDivElement>(null);
+    useOutsideClick(menubarRef, () => closeMenu());
 
-  return (
-    <MenubarContext.Provider value={{ isOpen, setIsOpen, selectedMenu, setSelectedMenu, closeMenu, closeOnSelect }}>
-      <div ref={menubarRef} className={menubar} {...props}></div>
-    </MenubarContext.Provider>
-  );
-});
+    return (
+      <MenubarContext.Provider value={{ isOpen, setIsOpen, selectedMenu, setSelectedMenu, closeMenu, closeOnSelect }}>
+        <div ref={ref}>
+          <div ref={menubarRef} className={styles.menubar} {...props}></div>
+        </div>
+      </MenubarContext.Provider>
+    );
+  },
+);
 
 interface MenubarMenuProps extends ComponentProps<'div'> {}
 const MenubarMenu = forwardRef<HTMLDivElement, MenubarMenuProps>(({ ...props }, ref) => {
@@ -60,7 +50,7 @@ const MenubarMenu = forwardRef<HTMLDivElement, MenubarMenuProps>(({ ...props }, 
 
   return (
     <MenubarMenuContext.Provider value={{ isSelected, setIsSelected }}>
-      <div ref={ref} className={menubarMenu} {...props}></div>
+      <div ref={ref} className={styles.menubarMenu} {...props}></div>
     </MenubarMenuContext.Provider>
   );
 });
@@ -94,7 +84,7 @@ const MenubarTrigger = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ ...p
   return (
     <div
       ref={ref}
-      className={cx(menubarTrigger, `${isSelected ? 'active' : ''}`)}
+      className={cx(styles.menubarTrigger, `${isSelected ? 'active' : ''}`)}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       // onMouseLeave={handleMouseLeave}
@@ -111,10 +101,10 @@ const MenubarContent = forwardRef<HTMLDivElement, MenubarContentProps>(({ ...pro
   const menuContext = useMenubarMenuContext();
   const { isSelected } = menuContext;
 
-  return isOpen && isSelected ? <div ref={ref} className={menubarContent} {...props}></div> : null;
+  return isOpen && isSelected ? <div ref={ref} className={styles.menubarContent} {...props}></div> : null;
 });
 
-interface MenubarItemProps extends HTMLAttributes<HTMLElement> {
+interface MenubarItemProps extends Omit<HTMLAttributes<HTMLElement>, 'color'>, BoxProps {
   as?: ElementType;
   icon?: ReactNode;
   shortcut?: ReactNode;
@@ -142,13 +132,13 @@ const MenubarItem = forwardRef<HTMLElement, MenubarItemProps>(
       <Box
         as={as}
         ref={ref}
-        className={cx(menubarItem, `${disabled ? 'disabled' : ''}`)}
+        className={cx(styles.menubarItem, `${disabled ? 'disabled' : ''}`)}
         onClick={handleItemClick}
         {...props}
       >
-        {icon && <span className={itemIcon}>{icon}</span>}
-        <span className={itemContent}>{props.children}</span>
-        {shortcut && <span className={itemShortcut}>{shortcut}</span>}
+        {icon && <span className={styles.itemIcon}>{icon}</span>}
+        <span className={styles.itemContent}>{props.children}</span>
+        {shortcut && <span className={styles.itemShortcut}>{shortcut}</span>}
       </Box>
     );
   },
@@ -156,7 +146,7 @@ const MenubarItem = forwardRef<HTMLElement, MenubarItemProps>(
 
 interface MenubarSeparatorProps extends ComponentProps<'div'> {}
 const MenubarSeparator = forwardRef<HTMLDivElement, MenubarSeparatorProps>(({ ...props }, ref) => {
-  return <div ref={ref} className={menubarSeparator} {...props}></div>;
+  return <div ref={ref} className={styles.menubarSeparator} {...props}></div>;
 });
 
 const MenubarCompound = Object.assign(Menubar, {
