@@ -37,22 +37,22 @@ const sizeStyles = {
   xSmall: {
     padding: '0.25rem 0.5rem',
     fontSize: '0.75rem',
-    maxWidth: '60px',
+    minWidth: '60px',
   },
   small: {
     padding: '0.5rem 1rem',
     fontSize: '0.875rem',
-    maxWidth: '66px',
+    minWidth: '66px',
   },
   medium: {
     padding: '0.5rem 1rem',
     fontSize: '1rem',
-    maxWidth: '84px',
+    minWidth: '84px',
   },
   large: {
     padding: '0.75rem 1.5rem',
     fontSize: '1.125rem',
-    maxWidth: '88px',
+    minWidth: '88px',
   },
 };
 
@@ -161,9 +161,3 @@ export const buttonStyles = recipe({
 });
 
 export type ButtonStylesProps = RecipeVariants<typeof buttonStyles>;
-
-export const wrapper = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
-});

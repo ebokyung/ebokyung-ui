@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from '.';
-import { wrapper } from './button.css';
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
@@ -30,11 +29,14 @@ const meta: Meta<typeof Button> = {
       options: ['true', 'false'],
       control: { type: 'boolean' },
     },
+    stretch: {
+      options: ['true', 'false'],
+      control: { type: 'boolean' },
+    },
   },
   render: props => (
-    <div className={wrapper}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', width: '300px' }}>
       {['primary', 'secondary', 'negative'].map(item => (
-        // TODO: type 부분 고민
         <Button {...props} color={item as typeof props.color} onClick={() => alert('Clicked!')}>
           Button
         </Button>
@@ -46,11 +48,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const DefaultOnClick: Story = {
-  args: {
-    children: 'On click!',
-  },
-};
+export const DefaultOnClick: Story = {};
 
 export const SolidLarge: Story = {
   args: {
@@ -87,5 +85,11 @@ export const Pending: Story = {
 export const WithIcon: Story = {
   args: {
     prefix: '🍓',
+  },
+};
+
+export const Stretch: Story = {
+  args: {
+    stretch: true,
   },
 };
