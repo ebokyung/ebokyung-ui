@@ -25,7 +25,7 @@ const Accordion = forwardRef<HTMLUListElement, AccordionProps>(({ allowMultiple,
 
   return (
     <AccordionContext.Provider value={{ expandedItems, handleToggle }}>
-      <ul ref={ref} className={cx(container, className)}>
+      <ul ref={ref} className={cx(container, className)} role="region" aria-multiselectable={allowMultiple}>
         {children}
       </ul>
     </AccordionContext.Provider>
@@ -38,7 +38,7 @@ type AccordionItemProps = BasicProps & {
 const AccordionItem = forwardRef<HTMLLIElement, AccordionItemProps>(({ id, children, className }, ref) => {
   return (
     <AccordionItemContext.Provider value={{ id }}>
-      <li ref={ref} className={cx(item, className)}>
+      <li ref={ref} className={cx(item, className)} role="presentation">
         {children}
       </li>
     </AccordionItemContext.Provider>
@@ -48,12 +48,18 @@ const AccordionItem = forwardRef<HTMLLIElement, AccordionItemProps>(({ id, child
 const AccordionTrigger = forwardRef<HTMLButtonElement, BasicProps>(({ children, className }, ref) => {
   const { expandedItems, handleToggle } = useAccordionContext();
   const { id } = useAccordionItemContext();
+  const isExpanded = expandedItems.includes(id);
 
   return (
-    <button ref={ref} className={cx(trigger, className)} onClick={() => handleToggle(id)}>
-      {/* ellips */}
+    <button
+      ref={ref}
+      className={cx(trigger, className)}
+      onClick={() => handleToggle(id)}
+      aria-controls={`panel-${id}`}
+      aria-expanded={isExpanded}
+    >
       <span className={title}>{children}</span>
-      {expandedItems.includes(id) ? '-' : '+'}
+      {isExpanded ? '-' : '+'}
     </button>
   );
 });
@@ -61,8 +67,17 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, BasicProps>(({ children, 
 const AccordionPanel = forwardRef<HTMLDivElement, BasicProps>(({ children, className }, ref) => {
   const { expandedItems } = useAccordionContext();
   const { id } = useAccordionItemContext();
+  const isExpanded = expandedItems.includes(id);
+
   return (
-    <div ref={ref} className={cx(content, className)} hidden={!expandedItems.includes(id)}>
+    <div
+      ref={ref}
+      className={cx(content, className)}
+      hidden={!isExpanded}
+      id={`panel-${id}`}
+      role="region"
+      aria-labelledby={`trigger-${id}`}
+    >
       {children}
     </div>
   );
