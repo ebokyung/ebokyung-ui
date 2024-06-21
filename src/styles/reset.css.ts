@@ -41,6 +41,7 @@ const button = style({
   color: 'inherit',
   backgroundColor: 'initial',
   cursor: 'pointer',
+  border: 'none',
 });
 
 const a = style({
