@@ -35,46 +35,46 @@ export const Default: Story = {
   },
 };
 
-// export const Many: Story = {
-//   render: ({ items }) => {
-//     const [fruit, setFruit] = useState('');
-//     const [color, setColor] = useState('');
+export const Many: Story = {
+  render: () => {
+    const [fruit, setFruit] = useState('');
+    const [color, setColor] = useState('');
 
-//     const colors = [
-//       { value: 'red', option: 'Red' },
-//       { value: 'blue', option: 'Blue' },
-//       { value: 'green', option: 'Green' },
-//     ];
+    const fruits = [
+      { value: 'apple', option: 'Apple' },
+      { value: 'orange', option: 'Orange' },
+      { value: 'banana', option: 'Banana' },
+      { value: 'grape', option: 'Grape' },
+    ];
 
-//     return (
-//       <>
-//         <Listbox onSelectedOptionChange={setFruit} selectedOption={fruit} items={items} label="fruits" />
-//         <div>selected fruit: {fruit}</div>
-//         <Listbox onSelectedOptionChange={setColor} selectedOption={color} items={colors} label="colors" />
-//         <div>selected color: {color}</div>
-//       </>
-//     );
-//   },
-// };
+    const colors = [
+      { value: 'red', option: 'Red' },
+      { value: 'blue', option: 'Blue' },
+      { value: 'green', option: 'Green' },
+    ];
 
-// export const ObjectOptions: Story = {
-//   render: ({ items }) => {
-//     const [fruit, setFruit] = useState('');
-//     const [color, setColor] = useState('');
+    return (
+      <>
+        <Listbox selectedOption={fruit} onSelectedOptionChange={setFruit}>
+          <Listbox.Trigger label="fruits" />
+          <Listbox.Options>
+            {fruits.map(item => {
+              return <Listbox.Option key={item.value} item={item} />;
+            })}
+          </Listbox.Options>
+        </Listbox>
+        <div>selected fruit: {fruit}</div>
 
-//     const colors = [
-//       { value: 'red', option: 'Red' },
-//       { value: 'blue', option: 'Blue' },
-//       { value: 'green', option: 'Green' },
-//     ];
-
-//     return (
-//       <>
-//         <Listbox onSelectedOptionChange={setFruit} selectedOption={fruit} items={items} label="fruits" />
-//         <div>selected fruit: {fruit}</div>
-//         <Listbox onSelectedOptionChange={setColor} selectedOption={color} items={colors} label="colors" />
-//         <div>selected color: {color}</div>
-//       </>
-//     );
-//   },
-// };
+        <Listbox selectedOption={color} onSelectedOptionChange={setColor}>
+          <Listbox.Trigger label="colors" />
+          <Listbox.Options>
+            {colors.map(item => {
+              return <Listbox.Option key={item.value} item={item} />;
+            })}
+          </Listbox.Options>
+        </Listbox>
+        <div>selected color: {color}</div>
+      </>
+    );
+  },
+};
