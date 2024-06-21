@@ -4,6 +4,7 @@ import { container, item, trigger, title, content } from './accordion.css';
 import { cx } from '@/utils/cx';
 import { AccordionContext, useAccordionContext } from './context/accordion.context';
 import { AccordionItemContext, useAccordionItemContext } from './context/accordion-item.context';
+import { Box } from '../Box';
 
 type AccordionProps = BasicProps & {
   allowMultiple: boolean;
@@ -25,9 +26,9 @@ const Accordion = forwardRef<HTMLUListElement, AccordionProps>(({ allowMultiple,
 
   return (
     <AccordionContext.Provider value={{ expandedItems, handleToggle }}>
-      <ul ref={ref} className={cx(container, className)} role="region" aria-multiselectable={allowMultiple}>
+      <Box as="ul" ref={ref} className={cx(container, className)} role="region" aria-multiselectable={allowMultiple}>
         {children}
-      </ul>
+      </Box>
     </AccordionContext.Provider>
   );
 });
@@ -38,9 +39,9 @@ type AccordionItemProps = BasicProps & {
 const AccordionItem = forwardRef<HTMLLIElement, AccordionItemProps>(({ id, children, className }, ref) => {
   return (
     <AccordionItemContext.Provider value={{ id }}>
-      <li ref={ref} className={cx(item, className)} role="presentation">
+      <Box as="li" ref={ref} className={cx(item, className)} role="presentation">
         {children}
-      </li>
+      </Box>
     </AccordionItemContext.Provider>
   );
 });
@@ -51,7 +52,8 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, BasicProps>(({ children, 
   const isExpanded = expandedItems.includes(id);
 
   return (
-    <button
+    <Box
+      as="button"
       ref={ref}
       className={cx(trigger, className)}
       onClick={() => handleToggle(id)}
@@ -60,7 +62,7 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, BasicProps>(({ children, 
     >
       <span className={title}>{children}</span>
       {isExpanded ? '-' : '+'}
-    </button>
+    </Box>
   );
 });
 
@@ -70,7 +72,7 @@ const AccordionPanel = forwardRef<HTMLDivElement, BasicProps>(({ children, class
   const isExpanded = expandedItems.includes(id);
 
   return (
-    <div
+    <Box
       ref={ref}
       className={cx(content, className)}
       hidden={!isExpanded}
@@ -79,7 +81,7 @@ const AccordionPanel = forwardRef<HTMLDivElement, BasicProps>(({ children, class
       aria-labelledby={`trigger-${id}`}
     >
       {children}
-    </div>
+    </Box>
   );
 });
 
