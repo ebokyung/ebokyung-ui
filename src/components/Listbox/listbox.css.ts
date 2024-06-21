@@ -47,7 +47,6 @@ export const optionList = style({
   border: '1px solid #c4c4c4',
   borderRadius: '0.5rem',
   background: '#fff',
-  display: 'none',
   selectors: {
     [`${selectButton}.on + &`]: {
       display: 'block',

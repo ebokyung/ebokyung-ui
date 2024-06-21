@@ -1,16 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 import { Dispatch, SetStateAction, createContext, useContext } from 'react';
 
-// TODO: 타입 확장하기
-type Item = {
-  value: NonNullable<string>;
-  option: string;
-};
-
 type ListboxContextState = {
-  onSelectedOptionChange: Dispatch<SetStateAction<string>>;
   selectedOption: string;
-  items: Item[];
+  onSelectedOptionChange: Dispatch<SetStateAction<string>>;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
