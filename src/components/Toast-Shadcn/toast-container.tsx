@@ -1,5 +1,5 @@
-import { ToastContext } from './context/context';
-import { useToast } from './hooks/useToast';
+import { ToastContext } from './toast.context';
+import { useToast } from './toast.hooks';
 import { Toast } from './toast';
 
 export const ToastContainer = ({ duration = 5000, position = 'right-top' }) => {

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { Toast, ToastContainer } from '.';
 import { Button } from '../Button';
-import { useToast } from './hooks/useToast';
+import { useToast } from './toast.hooks';
 
 const meta: Meta<typeof Toast> = {
   component: Toast,

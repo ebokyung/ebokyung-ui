@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { Toast as ToastComponent } from '../toast';
+import { Toast as ToastComponent } from './toast';
 
 type ToastProps = React.ComponentPropsWithoutRef<typeof ToastComponent>;
 
