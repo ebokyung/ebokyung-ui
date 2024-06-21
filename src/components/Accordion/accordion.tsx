@@ -2,8 +2,8 @@ import { BasicProps } from '@/types';
 import { forwardRef, useState } from 'react';
 import { container, item, trigger, title, content } from './accordion.css';
 import { cx } from '@/utils/cx';
-import { AccordionContext, useAccordionContext } from './context/accordion-context';
-import { AccordionItemContext, useAccordionItemContext } from './context/accordion-item-context';
+import { AccordionContext, useAccordionContext } from './context/accordion.context';
+import { AccordionItemContext, useAccordionItemContext } from './context/accordion-item.context';
 
 type AccordionProps = BasicProps & {
   allowMultiple: boolean;

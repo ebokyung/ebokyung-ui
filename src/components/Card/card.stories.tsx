@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Card, Button, Avatar } from '@/components';
+import { Button, Avatar } from '@/components';
+import { Card } from '.';
 import { CardStylesProps } from './card.css';
 
 const dummy = {
