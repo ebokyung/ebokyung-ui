@@ -6,23 +6,34 @@ const meta: Meta<typeof Combobox> = {
   title: 'Components/Combobox',
   component: Combobox,
   tags: ['autodocs'],
-  args: {
-    items: [
-      { value: 'apple', option: 'Apple' },
-      { value: 'orange', option: 'Orange' },
-      { value: 'banana', option: 'Banana' },
-      { value: 'grape', option: 'Grape' },
-    ],
-  },
 };
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  render: ({ items }) => {
+  render: () => {
     const [value, setValue] = useState('');
 
-    return <Combobox value={value} onValueChange={setValue} items={items} placeholder="fruits" />;
+    const items = [
+      { value: 'apple', option: 'Apple' },
+      { value: 'orange', option: 'Orange' },
+      { value: 'banana', option: 'Banana' },
+      { value: 'grape', option: 'Grape' },
+    ];
+
+    return (
+      <>
+        selected value: {value}
+        <Combobox value={value} onValueChange={setValue}>
+          <Combobox.Trigger placeholder="select a fruit" />
+          <Combobox.Options>
+            {items.map(item => (
+              <Combobox.Option key={item.value} value={item.option} />
+            ))}
+          </Combobox.Options>
+        </Combobox>
+      </>
+    );
   },
 };
