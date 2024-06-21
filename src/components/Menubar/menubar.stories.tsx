@@ -123,21 +123,21 @@ export const Disabled: Story = {
   },
 };
 
-// export const sementicItem: Story = {
-//   args: {},
-//   render: () => {
-//     return (
-//       <Menubar>
-//         <Menubar.Menu>
-//           <Menubar.Trigger>Edit</Menubar.Trigger>
-//           <Menubar.Content>
-//             <Menubar.Separator />
-//             <Menubar.Item as="a" href="#">
-//               Link
-//             </Menubar.Item>
-//           </Menubar.Content>
-//         </Menubar.Menu>
-//       </Menubar>
-//     );
-//   },
-// };
+export const SementicItem: Story = {
+  args: {},
+  render: () => {
+    return (
+      <Menubar>
+        <Menubar.Menu>
+          <Menubar.Trigger>Edit</Menubar.Trigger>
+          <Menubar.Content>
+            <Menubar.Separator />
+            <Menubar.Item as="a" href="#">
+              Link
+            </Menubar.Item>
+          </Menubar.Content>
+        </Menubar.Menu>
+      </Menubar>
+    );
+  },
+};
