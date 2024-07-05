@@ -30,7 +30,7 @@ type Action =
     }
   | {
       type: ActionType['REMOVE_TOAST'];
-      toastId?: ToastContainerToast['id'];
+      toastId: ToastContainerToast['id'];
     };
 
 // 전역 변수를 이용해 중앙 집중화
