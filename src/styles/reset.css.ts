@@ -53,6 +53,7 @@ type Resets = Partial<Record<keyof JSX.IntrinsicElements, string>>;
 export const elementResets: Resets = {
   ul: list,
   ol: list,
+  li: list,
   a,
   button,
   // ...
