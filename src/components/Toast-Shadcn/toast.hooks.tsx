@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { Toast as ToastComponent } from '../toast';
+import { Toast as ToastComponent } from './toast';
 
 type ToastProps = React.ComponentPropsWithoutRef<typeof ToastComponent>;
 
@@ -30,7 +30,7 @@ type Action =
     }
   | {
       type: ActionType['REMOVE_TOAST'];
-      toastId?: ToastContainerToast['id'];
+      toastId: ToastContainerToast['id'];
     };
 
 // 전역 변수를 이용해 중앙 집중화

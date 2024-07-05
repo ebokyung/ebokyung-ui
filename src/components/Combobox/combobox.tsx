@@ -1,123 +1,151 @@
-import { Dispatch, FormEvent, SetStateAction, forwardRef, useRef, useState } from 'react';
 import {
-  optionList,
-  optionButton,
-  optionItem,
-  triggerButton,
-  triggerInput,
-  triggerContainer,
-  comboboxContainer,
-} from './combobox.css';
+  Children,
+  ComponentProps,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  forwardRef,
+  isValidElement,
+  useRef,
+  useState,
+} from 'react';
+import { ComboboxContext, useComboboxContext } from './combobox.context';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
+import * as styles from './combobox.css';
 import { cx } from '@/utils/cx';
-import { ComboboxContext, useComboboxContext } from './context';
+import { Box } from '../Box';
 
-// TODO: 타입 확장하기
-type Item = {
-  value: NonNullable<string>;
-  option: string;
-};
-
-type ComboboxProps = {
+interface ComboboxProps extends Omit<ComponentProps<'div'>, 'color'> {
   value: string;
   onValueChange: Dispatch<SetStateAction<string>>;
-  items: Item[];
-  placeholder: string;
-};
+}
 
-export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
-  ({ value, onValueChange, items, placeholder }, ref) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [isFiltering, setIsFiltering] = useState(false);
+export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(({ value, onValueChange, ...props }, ref) => {
+  const [query, setQuery] = useState(value);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isFiltering, setIsFiltering] = useState(false);
+
+  const contextValue = { value, onValueChange, query, setQuery, isOpen, setIsOpen, isFiltering, setIsFiltering };
+
+  return (
+    <ComboboxContext.Provider value={contextValue}>
+      <Box ref={ref} className={styles.comboboxContainer} {...props}></Box>
+    </ComboboxContext.Provider>
+  );
+});
+
+interface ComboboxTriggerProps extends Omit<ComponentProps<'div'>, 'color'> {
+  placeholder?: string;
+}
+
+export const ComboboxTrigger = forwardRef<HTMLDivElement, ComboboxTriggerProps>(
+  ({ placeholder = 'select an option', ...props }, ref) => {
+    const context = useComboboxContext();
+    const { isOpen, setIsOpen, value, onValueChange, query, setQuery, setIsFiltering } = context;
+
+    const triggerRef = useRef<HTMLDivElement>(null);
+
+    const finishUpTyping = () => {
+      if (query !== value) {
+        if (query.trim() == '') {
+          setQuery('');
+          onValueChange('');
+        } else {
+          setQuery(value);
+        }
+      }
+    };
+
+    useOutsideClick(triggerRef, () => {
+      finishUpTyping();
+      setIsOpen(false);
+    });
+
+    const handleValueChange = (event: FormEvent<HTMLInputElement>) => {
+      setIsOpen(true);
+      setIsFiltering(true);
+      setQuery(event.currentTarget.value);
+    };
+
+    const handleInputFocus = () => {
+      setIsOpen(true);
+      setIsFiltering(false);
+    };
+
+    const handleButtonClick = () => {
+      finishUpTyping();
+      setIsOpen(!isOpen);
+      setIsFiltering(false);
+      // isOpen이면 input에 focus 추가
+    };
 
     return (
-      <ComboboxContext.Provider value={{ value, onValueChange, isOpen, setIsOpen, isFiltering, setIsFiltering, items }}>
-        <div ref={ref} role="listbox" aria-expanded={isOpen} aria-haspopup="listbox" className={comboboxContainer}>
-          <ComboboxTrigger placeholder={placeholder} />
-          <ComboboxOptions />
-        </div>
-      </ComboboxContext.Provider>
+      <div ref={ref}>
+        <Box ref={triggerRef} className={styles.triggerContainer} {...props}>
+          {/* input 컴포넌트 적용하기 */}
+          <input
+            value={query}
+            onChange={handleValueChange}
+            onFocus={handleInputFocus}
+            placeholder={placeholder}
+            className={styles.triggerInput}
+          />
+          <Box as="button" className={`${styles.triggerButton} ${isOpen ? 'on' : ''}`} onClick={handleButtonClick} />
+        </Box>
+      </div>
     );
   },
 );
 
-const ComboboxTrigger = ({ placeholder }: { placeholder: string }) => {
+interface ComboboxOptionsProps extends Omit<ComponentProps<'ul'>, 'color'> {}
+
+export const ComboboxOptions = forwardRef<HTMLUListElement, ComboboxOptionsProps>(({ ...props }, ref) => {
   const context = useComboboxContext();
-  const { isOpen, setIsOpen, value, onValueChange, setIsFiltering, items } = context;
+  const { isOpen, query, isFiltering } = context;
 
-  const selectRef = useRef<HTMLDivElement>(null);
-
-  useOutsideClick(selectRef, () => {
-    if (!items.some(item => item.option === value)) {
-      onValueChange('');
-    }
-    setIsOpen(false);
-  });
-
-  const handleValueChange = (event: FormEvent<HTMLInputElement>) => {
-    setIsOpen(true);
-    setIsFiltering(true);
-    onValueChange(event.currentTarget.value);
-  };
-
-  const handleButtonClick = () => {
-    setIsOpen(!isOpen);
-    setIsFiltering(false);
-  };
-
-  const handleInputFocus = () => {
-    setIsOpen(true);
-    setIsFiltering(false);
-  };
-
-  return (
-    <div ref={selectRef} className={triggerContainer}>
-      {/* input 컴포넌트 적용하기 */}
-      <input
-        value={value}
-        onChange={handleValueChange}
-        onFocus={handleInputFocus}
-        placeholder={placeholder}
-        className={triggerInput}
-      />
-      <button className={`${triggerButton} ${isOpen ? 'on' : ''}`} onClick={handleButtonClick} />
-    </div>
-  );
-};
-
-const ComboboxOptions = () => {
-  const context = useComboboxContext();
-  const { isOpen, setIsOpen, value, onValueChange, isFiltering, items } = context;
+  if (!isOpen) return null;
 
   const filteredItems = isFiltering
-    ? items.filter(item => item.option.toLowerCase().includes(value.toLowerCase()))
-    : items;
+    ? Children.toArray(props.children).filter(child => {
+        // child가 ReactElement<{ option: string }> 타입인지 확인
+        if (isValidElement<{ value: string }>(child)) {
+          // option 속성이 존재하는지 확인
+          const value = child.props.value;
+          return value && value.toLowerCase().includes(query.toLowerCase());
+        }
+        return false;
+      })
+    : props.children;
+
+  return (
+    <Box as="ul" ref={ref} role="listbox" className={styles.optionList} {...props}>
+      {Children.count(filteredItems) > 0 ? filteredItems : <div className={styles.empty}>no options</div>}
+    </Box>
+  );
+});
+
+interface ComboboxOptionProps extends Omit<ComponentProps<'li'>, 'color'> {
+  value: string;
+}
+
+export const ComboboxOption = forwardRef<HTMLLIElement, ComboboxOptionProps>(({ value, ...props }, ref) => {
+  const context = useComboboxContext();
+  const { value: selected, setQuery, onValueChange, setIsOpen } = context;
 
   const handleOptionSelect = (option: string) => {
+    setQuery(option);
     onValueChange(option);
     setIsOpen(false);
   };
 
-  if (!isOpen) return null;
-
   return (
-    <ul className={optionList} role="listbox">
-      {filteredItems.length <= 0 ? (
-        <li className={optionItem}>
-          <div>no option</div>
-        </li>
-      ) : (
-        filteredItems.map(item => (
-          <li key={item.value} className={optionItem} role="option" aria-selected={item.option === value}>
-            <button
-              className={cx(optionButton, `${item.option === value ? 'selected' : ''}`)}
-              onClick={() => handleOptionSelect(item.option)}
-            >
-              {item.option}
-            </button>
-          </li>
-        ))
-      )}
-    </ul>
+    <Box as="li" ref={ref} className={styles.optionItem} role="option" aria-selected={selected === value} {...props}>
+      <Box
+        className={cx(styles.optionContent, `${selected === value ? 'selected' : ''}`)}
+        onClick={() => handleOptionSelect(value)}
+      >
+        {value}
+      </Box>
+    </Box>
   );
-};
+});

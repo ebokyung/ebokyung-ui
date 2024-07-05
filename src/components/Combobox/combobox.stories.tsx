@@ -3,7 +3,7 @@ import { Combobox } from '.';
 import { useState } from 'react';
 
 const meta: Meta<typeof Combobox> = {
-  title: 'Components/Combobox-compound',
+  title: 'Components/Combobox',
   component: Combobox,
   tags: ['autodocs'],
 };

@@ -1,16 +1,7 @@
 import { cx } from '@/utils/cx';
 import { avatar } from './avatar.css';
-import { ReactNode, forwardRef } from 'react';
-import { BasicProps } from '@/types';
+import { ComponentProps, forwardRef } from 'react';
 
-type ImageProps = Omit<BasicProps, 'children'> & {
-  children: ReactNode;
-};
-
-export const Avatar = forwardRef<HTMLDivElement, ImageProps>(({ children, className }, ref) => {
-  return (
-    <div ref={ref} className={cx(avatar, className)}>
-      {children}
-    </div>
-  );
+export const Avatar = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, ...props }, ref) => {
+  return <div ref={ref} {...props} className={cx(avatar, className)}></div>;
 });

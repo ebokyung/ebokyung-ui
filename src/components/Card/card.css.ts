@@ -53,6 +53,7 @@ export const footer = style({
   padding: '1rem',
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'flex-end',
 });
 
 export const header = style({

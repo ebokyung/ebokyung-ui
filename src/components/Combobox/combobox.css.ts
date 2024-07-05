@@ -67,8 +67,8 @@ export const optionItem = style({
   padding: '0.2rem',
 });
 
-export const optionButton = style({
-  width: '100%',
+export const optionContent = style({
+  // width: '100%',
   height: '1.5rem',
   display: 'flex',
   alignItems: 'center',
@@ -88,4 +88,13 @@ export const optionButton = style({
       backgroundColor: '#fff3cf',
     },
   },
+});
+
+export const empty = style({
+  height: '1.5rem',
+  display: 'flex',
+  alignItems: 'center',
+  padding: '1rem',
+  color: 'gray',
+  pointerEvents: 'none',
 });

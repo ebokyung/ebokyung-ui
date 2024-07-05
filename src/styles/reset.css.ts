@@ -41,6 +41,7 @@ const button = style({
   color: 'inherit',
   backgroundColor: 'initial',
   cursor: 'pointer',
+  border: 'none',
 });
 
 const a = style({
@@ -52,6 +53,7 @@ type Resets = Partial<Record<keyof JSX.IntrinsicElements, string>>;
 export const elementResets: Resets = {
   ul: list,
   ol: list,
+  li: list,
   a,
   button,
   // ...

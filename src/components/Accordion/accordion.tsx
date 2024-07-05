@@ -2,8 +2,9 @@ import { BasicProps } from '@/types';
 import { forwardRef, useState } from 'react';
 import { container, item, trigger, title, content } from './accordion.css';
 import { cx } from '@/utils/cx';
-import { AccordionContext, useAccordionContext } from './context/accordion-context';
-import { AccordionItemContext, useAccordionItemContext } from './context/accordion-item-context';
+import { AccordionContext, useAccordionContext } from './context/accordion.context';
+import { AccordionItemContext, useAccordionItemContext } from './context/accordion-item.context';
+import { Box } from '../Box';
 
 type AccordionProps = BasicProps & {
   allowMultiple: boolean;
@@ -25,9 +26,9 @@ const Accordion = forwardRef<HTMLUListElement, AccordionProps>(({ allowMultiple,
 
   return (
     <AccordionContext.Provider value={{ expandedItems, handleToggle }}>
-      <ul ref={ref} className={cx(container, className)}>
+      <Box as="ul" ref={ref} className={cx(container, className)} role="region" aria-multiselectable={allowMultiple}>
         {children}
-      </ul>
+      </Box>
     </AccordionContext.Provider>
   );
 });
@@ -38,9 +39,9 @@ type AccordionItemProps = BasicProps & {
 const AccordionItem = forwardRef<HTMLLIElement, AccordionItemProps>(({ id, children, className }, ref) => {
   return (
     <AccordionItemContext.Provider value={{ id }}>
-      <li ref={ref} className={cx(item, className)}>
+      <Box as="li" ref={ref} className={cx(item, className)} role="presentation">
         {children}
-      </li>
+      </Box>
     </AccordionItemContext.Provider>
   );
 });
@@ -48,23 +49,39 @@ const AccordionItem = forwardRef<HTMLLIElement, AccordionItemProps>(({ id, child
 const AccordionTrigger = forwardRef<HTMLButtonElement, BasicProps>(({ children, className }, ref) => {
   const { expandedItems, handleToggle } = useAccordionContext();
   const { id } = useAccordionItemContext();
+  const isExpanded = expandedItems.includes(id);
 
   return (
-    <button ref={ref} className={cx(trigger, className)} onClick={() => handleToggle(id)}>
-      {/* ellips */}
+    <Box
+      as="button"
+      ref={ref}
+      className={cx(trigger, className)}
+      onClick={() => handleToggle(id)}
+      aria-controls={`panel-${id}`}
+      aria-expanded={isExpanded}
+    >
       <span className={title}>{children}</span>
-      {expandedItems.includes(id) ? '-' : '+'}
-    </button>
+      {isExpanded ? '-' : '+'}
+    </Box>
   );
 });
 
 const AccordionPanel = forwardRef<HTMLDivElement, BasicProps>(({ children, className }, ref) => {
   const { expandedItems } = useAccordionContext();
   const { id } = useAccordionItemContext();
+  const isExpanded = expandedItems.includes(id);
+
   return (
-    <div ref={ref} className={cx(content, className)} hidden={!expandedItems.includes(id)}>
+    <Box
+      ref={ref}
+      className={cx(content, className)}
+      hidden={!isExpanded}
+      id={`panel-${id}`}
+      role="region"
+      aria-labelledby={`trigger-${id}`}
+    >
       {children}
-    </div>
+    </Box>
   );
 });
 

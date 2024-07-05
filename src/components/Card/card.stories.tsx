@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Card, Button, Avatar } from '@/components';
+import { Button, Avatar } from '@/components';
+import { Card } from '.';
+import { CardStylesProps } from './card.css';
 
 const dummy = {
   title: 'Hello Card',
@@ -29,58 +31,74 @@ const meta: Meta<typeof Card> = {
       control: { type: 'select' },
     },
   },
-  render: props => (
-    <Card size={props.size} direction={props.direction}>
-      {props.children}
-    </Card>
-  ),
+  // render: props => {
+  //   const { size, direction, ...rest } = props;
+  //   return <Card size={size} direction={direction} {...rest}></Card>;
+  // },
 };
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
-  args: {
-    children: (
-      <>
+  render: props => {
+    return (
+      <Card {...props}>
         <Card.Header>
-          <Card.Title> Customer dashboard</Card.Title>
+          <Card.Title>Customer dashboard</Card.Title>
         </Card.Header>
         <Card.Body>
           <p>View a summary of all your customers over the last month.</p>
         </Card.Body>
-      </>
-    ),
+      </Card>
+    );
   },
 };
 
-export const Sizes: Story = {
-  render: () => (
-    <div>
-      {['small', 'medium', 'large'].map(size => (
-        <Card key={size} size={size as CardSize}>
-          <Card.Header>
-            <Card.Title>{size}</Card.Title>
-          </Card.Header>
-          <Card.Body>
-            <p>size = {size}</p>
-            <p>{dummy.content}</p>
-          </Card.Body>
-        </Card>
-      ))}
-    </div>
-  ),
+export const WithHeaderDescription: Story = {
+  render: props => {
+    return (
+      <Card {...props}>
+        <Card.Header>
+          <div>
+            <Card.Title>Customer dashboard</Card.Title>
+            <p>header description</p>
+          </div>
+        </Card.Header>
+        <Card.Body>
+          <p>View a summary of all your customers over the last month.</p>
+        </Card.Body>
+      </Card>
+    );
+  },
+};
+
+export const WithFooter: Story = {
+  render: props => {
+    return (
+      <Card {...props}>
+        <Card.Header>
+          <Card.Title>Customer dashboard</Card.Title>
+        </Card.Header>
+        <Card.Body>
+          <p>View a summary of all your customers over the last month.</p>
+        </Card.Body>
+        <Card.Footer>
+          <Button color="secondary" onClick={() => alert('Clicked!')}>
+            button
+          </Button>
+        </Card.Footer>
+      </Card>
+    );
+  },
 };
 
 export const WithImage: Story = {
-  args: {
-    children: (
-      <>
+  render: props => {
+    return (
+      <Card {...props}>
         <Card.Header>
-          <div>
-            <Card.Title>{dummy.title}</Card.Title>
-            <p>header description</p>
-          </div>
+          <Card.Title>{dummy.title}</Card.Title>
         </Card.Header>
         <Card.Image src={dummy.imgSrc} alt={dummy.imgAlt} />
         <Card.Body>
@@ -91,15 +109,15 @@ export const WithImage: Story = {
             button
           </Button>
         </Card.Footer>
-      </>
-    ),
+      </Card>
+    );
   },
 };
 
 export const WithImageInBody: Story = {
-  args: {
-    children: (
-      <>
+  render: props => {
+    return (
+      <Card {...props}>
         <Card.Body>
           <Card.Image src={dummy.imgSrc} alt={dummy.imgAlt} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -121,9 +139,28 @@ export const WithImageInBody: Story = {
             </Button>
           </div>
         </Card.Footer>
-      </>
-    ),
+      </Card>
+    );
   },
+};
+
+export const Sizes: Story = {
+  render: props => (
+    <>
+      {['small', 'medium', 'large'].map(size => (
+        // TODO: type?
+        <Card key={size} size={size as CardStylesProps['size']} {...props}>
+          <Card.Header>
+            <Card.Title>title</Card.Title>
+          </Card.Header>
+          <Card.Body>
+            <p>size = {size}</p>
+            <p>{dummy.content}</p>
+          </Card.Body>
+        </Card>
+      ))}
+    </>
+  ),
 };
 
 export const Advanced: Story = {
@@ -177,11 +214,7 @@ export const HorizontalCard: Story = {
             <p>Caffè latte is a coffee beverage of Italian origin made with espresso and steamed milk.</p>
           </Card.Body>
           <Card.Footer>
-            <div style={{ minWidth: '40%' }}>
-              <Button stretch onClick={() => alert('buy latte 클릭')}>
-                Buy Latte
-              </Button>
-            </div>
+            <Button onClick={() => alert('buy latte 클릭')}>Buy Latte</Button>
           </Card.Footer>
         </div>
       </>

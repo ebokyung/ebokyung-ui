@@ -1,9 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext } from 'react';
+import { toastViewportVariants } from './toast.css';
+
+export type ToastPosition = toastViewportVariants;
 
 type ToastContextValue = {
   duration: number;
-  position: 'right-top' | 'right-bottom';
+  position: ToastPosition;
 };
 
 export const ToastContext = createContext<ToastContextValue | null>(null);

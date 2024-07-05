@@ -1,63 +1,35 @@
-import { forwardRef } from 'react';
+import { ComponentProps, forwardRef } from 'react';
 import { cx } from '@/utils/cx';
 import { CardStylesProps, body, cardStyles, footer, header, title, image, maxWidth } from './card.css';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
-import { BasicProps } from '@/types';
 
-type CardProps = BasicProps;
-const Card = forwardRef<HTMLDivElement, CardStylesProps & CardProps>(
-  ({ size = 'medium', direction = 'column', className, children }, ref) => {
-    return (
-      <div ref={ref} className={cx(cardStyles({ size, direction }), className)}>
-        {children}
-      </div>
-    );
+const Card = forwardRef<HTMLDivElement, CardStylesProps & ComponentProps<'div'>>(
+  ({ size = 'medium', direction = 'column', className, ...props }, ref) => {
+    return <div ref={ref} className={cx(cardStyles({ size, direction }), className)} {...props}></div>;
   },
 );
 
-type CardBodyProps = BasicProps;
-const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(({ children, className }, ref) => {
-  return (
-    <div ref={ref} className={cx(body, className)}>
-      {children}
-    </div>
-  );
+const CardBody = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, ...props }, ref) => {
+  return <div ref={ref} className={cx(body, className)} {...props}></div>;
 });
 
-type CardFooterProps = BasicProps;
-const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(({ children, className }, ref) => {
-  return (
-    <div ref={ref} className={cx(footer, className)}>
-      {children}
-    </div>
-  );
+const CardFooter = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, ...props }, ref) => {
+  return <div ref={ref} className={cx(footer, className)} {...props}></div>;
 });
 
-type CardHeaderProps = BasicProps;
-const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(({ className, children }, ref) => {
-  return (
-    <div ref={ref} className={cx(header, className)}>
-      {children}
-    </div>
-  );
+const CardHeader = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, ...props }, ref) => {
+  return <div ref={ref} className={cx(header, className)} {...props}></div>;
 });
 
-type CardImageProps = {
-  src: string;
-  alt: string;
+type CardImageProps = ComponentProps<'img'> & {
   maxW?: string;
 };
-const CardImage = forwardRef<HTMLImageElement, CardImageProps>(({ src, alt, maxW }, ref) => {
-  return <img ref={ref} src={src} alt={alt} className={image} style={assignInlineVars({ [maxWidth]: maxW })} />;
+const CardImage = forwardRef<HTMLImageElement, CardImageProps>(({ maxW, ...props }, ref) => {
+  return <img ref={ref} className={image} style={assignInlineVars({ [maxWidth]: maxW })} {...props} />;
 });
 
-type CardTitleProps = BasicProps;
-export const CardTitle = forwardRef<HTMLDivElement, CardTitleProps>(({ children, className }, ref) => {
-  return (
-    <div ref={ref} className={cx(title, className)}>
-      {children}
-    </div>
-  );
+export const CardTitle = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ className, ...props }, ref) => {
+  return <div ref={ref} className={cx(title, className)} {...props}></div>;
 });
 
 const CardCompound = Object.assign(Card, {
